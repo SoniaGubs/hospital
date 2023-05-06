@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Reception {
+public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,12 +35,17 @@ public class Reception {
     @Column(name = "date_of_discharge")
     private LocalDateTime dateOfDischarge;
 
-    @OneToMany
-    @JoinColumn(name = "reception_id")
-    private List<ReceptionDiagnosis> diagnoses;
 
     @OneToMany
-    @JoinColumn(name = "reception_id")
+    @JoinColumn(name = "card_id")
+    private List<CardDiagnosis> startDiagnoses;
+
+    @OneToMany
+    @JoinColumn(name = "card_id")
+    private List<CardDiagnosis> finalDiagnosis;
+
+    @OneToMany
+    @JoinColumn(name = "card_id")
     private List<Treatment> treatments;
 
 

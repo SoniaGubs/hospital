@@ -18,6 +18,7 @@ public class Patient {
     private Integer id;
     private String name;
     private String surname;
+    private String patronymic;
 
     @Enumerated(EnumType.STRING)
    private Gender gender;
@@ -28,7 +29,7 @@ public class Patient {
     private String phone;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "patient")
-    private List<Reception> receptions;
+    private List<Card> cards;
 
 /*    @Override
     public String toString() {

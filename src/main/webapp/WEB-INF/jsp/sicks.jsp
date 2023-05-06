@@ -7,9 +7,10 @@
 </head>
 <body>
 
+Patient's list: <br>
 
-<c:forEach items="${sicks}" var="reception">
-    <a href="<c:url value="/reception?id=${reception.id}"/>"> ${reception.patient.name} - ${reception.patient.surname} </a> <br>
+<c:forEach items="${sicks}" var="card">
+    <a href="<c:url value="/card?id=${card.id}"/>">  ${card.patient.surname} ${card.patient.name} ${card.patient.patronymic} </a> <br>
 </c:forEach>
 
 

@@ -18,6 +18,10 @@ public class Diagnosis {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Integer id;
 
-    @Column(name = "diagnosis_name")
+
+    @Column(name = "code_MKB10")
+    private String code;
+
+    @Column(name = "name")
     private String diagnosisName;
 }
