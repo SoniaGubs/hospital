@@ -1,16 +1,16 @@
 package com.academy.hospital.service;
 
+import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.model.entity.Card;
-import com.academy.hospital.model.entity.Diagnosis;
 
 import java.util.List;
 
 public interface CardService {
     List<Card> findAll();
 
-    Card findReception(Integer id);
+    CardDto findCard(Integer id);
 
-    List<Card> findSick();
+    List<CardDto> findSick();
 
     //void setDiagnosis(Diagnosis diagnosis, Integer receptionId);
 }

@@ -1,6 +1,6 @@
 package com.academy.hospital.controller;
 
-import com.academy.hospital.model.entity.Card;
+import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.service.CardService;
 import com.academy.hospital.service.PatientService;
 import com.academy.hospital.service.StaffService;
@@ -33,15 +33,12 @@ public class ViewController {
 
     @GetMapping("/sicks")
     public String getAllSick(Model model) {
-        List <Card> cards = cardService.findSick();
+        List <CardDto> cards = cardService.findSick();
         model.addAttribute("sicks", cards);
         return "sicks";
 
     }
 
-    @GetMapping("/doctor")
-    public String showMainPageDoctor(){
-        return "doctorMainPage";
-    }
+
 
 }

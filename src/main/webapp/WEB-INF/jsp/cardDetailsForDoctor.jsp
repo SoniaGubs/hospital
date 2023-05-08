@@ -40,6 +40,21 @@ Operations:
         ${treatment.operation}  <br>
     </c:if>
 </c:forEach>
+<br>
+
+<a href="<c:url value="/diagnoses"/>"> Set diagnoses</a>
+
+
+
+<br>
+
+Diagnoses:
+<c:forEach items="${card.startDiagnoses}" var="startDiagnosis">
+        ${startDiagnosis.code}   ${startDiagnosis.diagnosisName}   <br>
+</c:forEach>
+
+
+
 
 <a href="<c:url value="/sicks"/>"> Back to card list </a>
 

@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -31,18 +31,39 @@ public class Card {
     private Staff staff;
 
     @Column(name = "date_of_admission")
-    private LocalDateTime dateOfAdmission;
+    private LocalDate dateOfAdmission;
     @Column(name = "date_of_discharge")
-    private LocalDateTime dateOfDischarge;
+    private LocalDate dateOfDischarge;
 
 
-    @OneToMany
-    @JoinColumn(name = "card_id")
-    private List<CardDiagnosis> startDiagnoses;
+    @ManyToMany
+    @JoinTable(
+            name = "card_diagnosis",
+            joinColumns = {@JoinColumn(name ="card_id")},
+            inverseJoinColumns = {@JoinColumn(name = "diagnosis_id")}
+    )
+    private List<Diagnosis> startDiagnoses;
 
+    @Column(name = "description_start_diagnosis")
+    private String descriptionStartDiagnosis;
+
+    @Column(name = "description_final_diagnosis")
+    private String descriptionFinalDiagnosis;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "card_diagnosis",
+            joinColumns = {@JoinColumn(name ="card_id")},
+            inverseJoinColumns = {@JoinColumn(name = "diagnosis_id")}
+    ) private List<Diagnosis> finalDiagnosis;
+/*
     @OneToMany
     @JoinColumn(name = "card_id")
     private List<CardDiagnosis> finalDiagnosis;
+*/
+
+
 
     @OneToMany
     @JoinColumn(name = "card_id")
