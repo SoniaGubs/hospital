@@ -42,8 +42,7 @@ Operations:
 </c:forEach>
 <br>
 
-<a href="<c:url value="/diagnoses"/>"> Set diagnoses</a>
-
+<a href="<c:url value="/showAllDiagnoses?id=${card.id}"/>"> Set diagnoses</a>
 
 
 <br>
@@ -53,10 +52,11 @@ Diagnoses:
         ${startDiagnosis.code}   ${startDiagnosis.diagnosisName}   <br>
 </c:forEach>
 
+Description: ${card.descriptionStartDiagnosis} <br>
 
 
 
-<a href="<c:url value="/sicks"/>"> Back to card list </a>
+<a href="<c:url value="/sicks"/>"> Back to cards list </a>
 
 
 </body>

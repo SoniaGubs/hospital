@@ -53,9 +53,9 @@ CREATE TABLE card
 
 CREATE TABLE diagnosis
 (
-    id        INT          NOT NULL AUTO_INCREMENT,
-    code_MKB10 VARCHAR(40)  NOT NULL,
-    name      VARCHAR(200) NOT NULL,
+    id    INT          NOT NULL AUTO_INCREMENT,
+    ICD10 VARCHAR(40)  NOT NULL,
+    name  VARCHAR(200) NOT NULL,
     PRIMARY KEY (id)
 );
 

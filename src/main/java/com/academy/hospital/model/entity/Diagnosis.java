@@ -19,7 +19,7 @@ public class Diagnosis {
     private Integer id;
 
 
-    @Column(name = "code_MKB10")
+    @Column(name = "ICD10")
     private String code;
 
     @Column(name = "name")
