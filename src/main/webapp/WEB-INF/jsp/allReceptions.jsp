@@ -8,8 +8,8 @@
 <body>
 
 
-<c:forEach items="${allReceptions}" var="reception">
-    <a href="<c:url value="/reception?id=${reception.id}"/>"> ${reception.patient.name} - ${reception.patient.surname} </a> <br>
+<c:forEach items="${allReceptions}" var="card">
+    <a href="<c:url value="/card?id=${card.id}"/>"> ${card.patient.name} - ${card.patient.surname} </a> <br>
 </c:forEach>
 
 

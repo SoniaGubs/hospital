@@ -20,7 +20,8 @@ public class Treatment {
     //@ManyToOne
     //private Card card;
     @Column(name = "treatment_type")
-    private String treatmentType;
+    @Enumerated(EnumType.STRING)
+    private TreatmentType treatmentType;
     private String drug;
     private String operation;
     @Column(name = "procedures")
