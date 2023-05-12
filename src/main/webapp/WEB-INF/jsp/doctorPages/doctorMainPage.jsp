@@ -14,4 +14,4 @@ Hello, doctor ${staff.name} ${staff.surname} ! <br>
 <a href="<c:url value="/sicks"/>"> Patients </a> <br>
 <br>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

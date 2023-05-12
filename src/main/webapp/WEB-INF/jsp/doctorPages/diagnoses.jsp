@@ -26,6 +26,7 @@ Diagnoses:
     comment<br>
     <sf:input path="descriptionStartDiagnosis"/> <br>
     <sf:hidden path="id"/>
+    <input type="reset">
     <input type="submit" value="Set diagnoses">
 
 </sf:form>

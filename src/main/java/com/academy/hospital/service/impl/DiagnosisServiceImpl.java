@@ -15,14 +15,14 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
     private final DiagnosisRepository diagnosisRepository;
 
-    @Override
+    /*@Override
     public Diagnosis findDiagnosis(Integer id) {
         return diagnosisRepository.getReferenceById(id);
     }
-
+*/
     @Override
     public List<Diagnosis> findAll() {
-        return diagnosisRepository.findAll(Sort.by(Sort.Direction.ASC, "code"));
+        return diagnosisRepository.findAll();
     }
 
 

@@ -29,8 +29,8 @@ CREATE TABLE patient
     name          varchar(45) NOT NULL,
     patronymic    varchar(45) DEFAULT NULL,
     gender        varchar(45) NOT NULL,
-    date_of_birth date        NOT NULL,
-    passport      varchar(45) NOT NULL,
+    date_of_birth date        DEFAULT NULL,
+    passport      varchar(45) DEFAULT NULL,
     phone         varchar(45) DEFAULT NULL,
     PRIMARY KEY (id)
 

@@ -8,13 +8,13 @@ import com.academy.hospital.model.entity.Diagnosis;
 import java.util.List;
 
 public interface CardService {
-    List<Card> findAll();
+    List<CardDto> findAll();
 
     CardDto findCard(Integer id);
 
     List<CardDto> findSick();
 
-    CardDto setDiagnosis(List<Diagnosis> diagnoses, Integer id);
+   // CardDto setDiagnosis(List<Diagnosis> diagnoses, Integer id);
 
     CardSetDiagnosesDto createCardSetDiagnosesDto (Integer id);
 

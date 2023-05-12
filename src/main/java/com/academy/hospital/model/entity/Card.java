@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -30,11 +31,13 @@ public class Card {
     @JoinColumn(name = "staff_id")
     private Staff staff;
 
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     @Column(name = "date_of_admission")
     private LocalDate dateOfAdmission;
+
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     @Column(name = "date_of_discharge")
     private LocalDate dateOfDischarge;
-
 
     @ManyToMany
     @JoinTable(

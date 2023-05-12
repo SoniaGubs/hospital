@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class ViewController {
+public class CommonController {
 
     private final CardService cardService;
     private final PatientService patientService;

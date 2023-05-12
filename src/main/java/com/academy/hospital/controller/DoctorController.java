@@ -21,32 +21,31 @@ import java.util.List;
 public class DoctorController {
 
     private final CardService cardService;
-    private final DiagnosisService diagnosisService;
 
     @GetMapping("/doctor")
-    public String showMainPageDoctor(){
-        return "doctorMainPage";
+    public String showMainPageDoctor() {
+        return "doctorPages/doctorMainPage";
     }
 
     @GetMapping("/card")
     public String findCard(@RequestParam(value = "id") Integer id, Model model) {
         CardDto card = cardService.findCard(id);
         model.addAttribute("card", card);
-        return "cardDetailsForDoctor";
+        return "doctorPages/cardDetailsForDoctor";
     }
 
     @GetMapping("/showAllDiagnoses")
-    public String getAllDiagnoses(@RequestParam(value = "id") Integer id, Model model){
+    public String getAllDiagnoses(@RequestParam(value = "id") Integer id, Model model) {
         CardSetDiagnosesDto cardSetDiagnosesDto = cardService.createCardSetDiagnosesDto(id);
         model.addAttribute("cardSetDiagnosesDto", cardSetDiagnosesDto);
-        return "diagnoses";
+        return "doctorPages/diagnoses";
     }
 
     @PostMapping("/updateCard")
-    public String updateCard (@ModelAttribute CardSetDiagnosesDto cardSetDiagnosesDto,  Model model){
-        CardDto card=cardService.save(cardSetDiagnosesDto);
-        model.addAttribute("card",card);
-        return "cardDetailsForDoctor";
+    public String updateCard(@ModelAttribute CardSetDiagnosesDto cardSetDiagnosesDto, Model model) {
+        CardDto card = cardService.save(cardSetDiagnosesDto);
+        model.addAttribute("card", card);
+        return "doctorPages/cardDetailsForDoctor";
     }
 
 
@@ -66,15 +65,6 @@ public class DoctorController {
     }*/
 
 
-  /*  @PostMapping("/createDepartment")
-    public String createEmployee(@ModelAttribute Department createDepartment, Model model){
-        departmentService.save(createDepartment);
-
-        List<Department> departments = departmentService.findAll();
-        model.addAttribute("departments", departments);
-        return "department/department";
-    }
-*/
 
 
 

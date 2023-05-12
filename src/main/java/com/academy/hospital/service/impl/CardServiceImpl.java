@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -25,8 +26,8 @@ public class CardServiceImpl implements CardService {
     private final DiagnosisRepository diagnosisRepository;
 
     @Override
-    public List<Card> findAll() {
-        return cardRepository.findAll();
+    public List<CardDto> findAll() {
+        return cardMapper.modelsToDto(cardRepository.findAll());
     }
 
     @Override
@@ -39,26 +40,21 @@ public class CardServiceImpl implements CardService {
         return cardMapper.modelsToDto(cardRepository.findByDateOfDischargeIsNull());
     }
 
-    @Override
+ /*   @Override
     public CardDto setDiagnosis(List<Diagnosis> diagnoses, Integer id) {
         Card card = cardRepository.getReferenceById(id);
         card.setStartDiagnoses(diagnoses);
        return cardMapper.toDto(cardRepository.save(card));
-    }
+    }*/
 
     public CardSetDiagnosesDto createCardSetDiagnosesDto (Integer id){
-        CardDto cardDto = findCard(id);
-
-        CardSetDiagnosesDto cardSetDiagnosesDto = new CardSetDiagnosesDto();
-        cardSetDiagnosesDto.setId(id);
-        cardSetDiagnosesDto.setStartDiagnoses(cardDto.getStartDiagnoses());
-        cardSetDiagnosesDto.setDescriptionStartDiagnosis(cardDto.getDescriptionStartDiagnosis());
-
-        List<Diagnosis> startDiagnoses = cardDto.getStartDiagnoses();
+        Card card = cardRepository.getReferenceById(id);
+        CardSetDiagnosesDto cardSetDiagnosesDto = cardSetDiagnosesMapper.toDto(card);
+        List<Diagnosis> startDiagnoses = card.getStartDiagnoses();
         List<Diagnosis> allRemainingDiagnoses = new ArrayList<>(diagnosisRepository.findAll());
         allRemainingDiagnoses.removeAll(startDiagnoses);
+        allRemainingDiagnoses.sort(Comparator.comparing(Diagnosis::getCode));
         cardSetDiagnosesDto.setAllRemainingDiagnoses(allRemainingDiagnoses);
-
         return cardSetDiagnosesDto;
     }
 

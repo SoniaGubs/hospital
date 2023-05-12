@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DiagnosisService  {
 
-    Diagnosis findDiagnosis(Integer id);
+  //  Diagnosis findDiagnosis(Integer id);
 
     List <Diagnosis> findAll();
 
