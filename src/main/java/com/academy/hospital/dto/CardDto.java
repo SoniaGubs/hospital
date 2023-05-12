@@ -11,7 +11,7 @@ import java.util.List;
 public class CardDto {
 
     private Integer id;
-    private Patient patient;
+    private PatientDto patient;
 
     private Staff staff;
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)

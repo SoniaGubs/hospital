@@ -10,7 +10,7 @@
 
 
 <br>
-<a href="<c:url value="/showCreatePatient"/>"> Create new patient </a> <br>
+<a href="<c:url value="/showCreateUpdatePatient"/>"> Create new patient </a> <br>
 <br>
 
 Found patients:<br>
@@ -22,6 +22,8 @@ Found patients:<br>
 
 
 <br>
+<a href="<c:url value="/receptionist"/>"> Back to main page </a>
 
+<br>
 
 <%@include file="../common/footer.jsp" %>

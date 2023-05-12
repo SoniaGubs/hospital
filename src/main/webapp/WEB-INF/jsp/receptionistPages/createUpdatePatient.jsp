@@ -10,15 +10,15 @@
 <body>
 
 
-<c:url value="/createPatient" var="createPatientAction"/>
+<c:url value="/createUpdatePatient" var="createUpdatePatientAction"/>
 
-<sf:form method="post" action="${createPatientAction}" modelAttribute="createPatient">
+<sf:form method="post" action="${createUpdatePatientAction}" modelAttribute="patient">
 
 <sf:label path="surname">Surname </sf:label>
-    <sf:input  path="surname"  required="required"/> <br>
+    <sf:input  path="surname" required="required"/> <br>
 
 <sf:label path="name">Name</sf:label>
-    <sf:input path="name" required="required"/> <br>
+    <sf:input path="name"  required="required"/> <br>
 
 <sf:label path="patronymic">Patronymic</sf:label>
     <sf:input path="patronymic"/> <br>
@@ -38,7 +38,8 @@
 <sf:label path="phone">Phone </sf:label>
     <sf:input path="phone"/> <br>
 
-<input type="submit" value="Create Employee">
+    <sf:hidden path="id" /> <br>
+<button type="submit"> ok </button>
 </sf:form>
 
 

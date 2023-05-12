@@ -22,5 +22,5 @@ public class PatientDto {
     private LocalDate dob;
     private String phone;
 
-    private List<CardDto> cards;
+   // private List<CardDto> cards;
 }

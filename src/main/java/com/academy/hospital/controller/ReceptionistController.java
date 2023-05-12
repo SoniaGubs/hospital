@@ -2,25 +2,21 @@ package com.academy.hospital.controller;
 
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.PatientDto;
-import com.academy.hospital.model.entity.Patient;
+import com.academy.hospital.service.CardService;
 import com.academy.hospital.service.PatientService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class ReceptionistController {
-
     private final PatientService patientService;
+    private final CardService cardService;
 
     @GetMapping("/receptionist")
     public String showMainPageReceptionist() {
@@ -34,26 +30,23 @@ public class ReceptionistController {
         return "receptionistPages/findPatient";
     }
 
-
-    @GetMapping("/showCreatePatient")
-    public String showCreatePatient(Model model) {
-        PatientDto patientDto = new PatientDto();
-        model.addAttribute("createPatient", patientDto);
-        return "receptionistPages/createPatient";
+    @RequestMapping("/showCreateUpdatePatient")
+    public String showCreateUpdatePatient(@ModelAttribute("patient") PatientDto updatePatient, Model model) {
+        if (updatePatient != null) {
+            model.addAttribute("patient", updatePatient);
+        } else {
+            PatientDto patientDto = new PatientDto();
+            model.addAttribute("patient", patientDto);
+        }
+        return "receptionistPages/createUpdatePatient";
     }
 
-
-    @PostMapping("/createPatient")
-    public String createPatient(@ModelAttribute("createPatient") PatientDto createPatient, Model model) {
-       PatientDto patient= patientService.save(createPatient);
-       model.addAttribute("patient", patient);
-
-        /*employeeService.save(createEmployee);
-        List<EmployeeDto> employees = employeeService.findAll();
-        model.addAttribute("employees", employees);*/
+    @PostMapping("/createUpdatePatient")
+    public String createUpdatePatient(@ModelAttribute("patient") PatientDto createPatient, Model model) {
+        PatientDto patient = patientService.save(createPatient);
+        model.addAttribute("patient", patient);
         return "receptionistPages/patientDetails";
     }
-
 
     @GetMapping("/patient")
     public String findPatient(@RequestParam(value = "id") Integer id, Model model) {
@@ -63,13 +56,19 @@ public class ReceptionistController {
     }
 
 
-    @PostMapping("/updatePatient")
-    public String updatePatient(@ModelAttribute("patient") PatientDto updatePatient, Model model) {
+    @GetMapping("/createCard")
+    public String createCard(@RequestParam(value = "id") Integer id, Model model) {
+        PatientDto patientDto = patientService.find(id);
+        CardDto card = new CardDto();
+        card.setDateOfAdmission(LocalDate.now());
+        card.setPatient(patientDto);
+        cardService.save(card);
 
-        /*employeeService.save(createEmployee);
-        List<EmployeeDto> employees = employeeService.findAll();
-        model.addAttribute("employees", employees);*/
-        return "receptionistPages/patientDetails";
+        return "receptionistPages/receptionistMainPage";
     }
+
+
+
+
 
 }

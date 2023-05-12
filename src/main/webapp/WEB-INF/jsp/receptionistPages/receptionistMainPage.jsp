@@ -10,16 +10,15 @@
 Hello, ${staff.name} ${staff.surname} ! <br>
 
 
-
 <form action="<c:url value="/searchPatient"/>">
-    <label>Surname: </label> <input name="surname" > <br>
+    <label>Surname: </label>
+    <input name="surname"> <br>
     <label>Name: </label> <input name="name"> <br>
     <label>Patronymic: </label> <input name="patronymic"> <br>
+    <button type="submit">Search patient</button>
 
     <input type="submit" value="Search patient">
 </form>
-
-
 
 
 <%@include file="../common/footer.jsp" %>

@@ -47,7 +47,7 @@ public class CardServiceImpl implements CardService {
        return cardMapper.toDto(cardRepository.save(card));
     }*/
 
-    public CardSetDiagnosesDto createCardSetDiagnosesDto (Integer id){
+    public CardSetDiagnosesDto createCardSetDiagnosesDto(Integer id) {
         Card card = cardRepository.getReferenceById(id);
         CardSetDiagnosesDto cardSetDiagnosesDto = cardSetDiagnosesMapper.toDto(card);
         List<Diagnosis> startDiagnoses = card.getStartDiagnoses();
@@ -63,7 +63,13 @@ public class CardServiceImpl implements CardService {
         Card card = cardRepository.getReferenceById(cardSetDiagnosesDto.getId());
         card.setStartDiagnoses(cardSetDiagnosesDto.getStartDiagnoses());
         card.setDescriptionStartDiagnosis(cardSetDiagnosesDto.getDescriptionStartDiagnosis());
-       return cardMapper.toDto(cardRepository.save(card));
+        return cardMapper.toDto(cardRepository.save(card));
+    }
+
+    @Override
+    public void save(CardDto cardDto) {
+        Card card = cardMapper.toModel(cardDto);
+        cardRepository.save(card);
     }
 
 

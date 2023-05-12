@@ -15,5 +15,6 @@ public interface PatientMapper {
 
 
     List<PatientDto> modelsToDto (List<Patient> patients);
+    List<Patient> dtoToModels (List<PatientDto> patients);
 
 }

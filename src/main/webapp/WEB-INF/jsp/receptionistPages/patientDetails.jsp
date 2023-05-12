@@ -13,11 +13,12 @@ Patronymic: ${patient.patronymic} <br>
 Date of birth: ${patient.dob}<br>
 Gender ${patient.gender}<br>
 Phone: ${patient.phone}<br>
-Phone: ${patient.passport}<br>
+Passport: ${patient.passport}<br>
 
 
-<c:url value="/updatePatient" var="updatePatientAction"/>
+<c:url value="/showCreateUpdatePatient" var="updatePatientAction"/>
 <sf:form method="post" action="${updatePatientAction}" modelAttribute="patient">
+    <sf:hidden path="id" /> <br>
     <sf:hidden path="surname" /> <br>
     <sf:hidden path="name" /> <br>
     <sf:hidden path="patronymic"/> <br>
@@ -29,11 +30,13 @@ Phone: ${patient.passport}<br>
 </sf:form>
 
 
+
 <a href="<c:url value="/createCard?id=${patient.id}"/>"> create card </a>
 
 
+<a href="<c:url value="/receptionist"/>"> Back to main page </a>
 
-<a href="<c:url value=""/>"> Back to employee list </a>
+<br>
 
 </body>
 </html>
