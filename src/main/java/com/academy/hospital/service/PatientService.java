@@ -13,5 +13,5 @@ public interface PatientService {
   // List<PatientDto> findAllBySurnameAndNameAndPatronymic(String surname, String name, String patronymic);
    List<PatientDto> findByParameters(String surname, String name, String patronymic);
 
-    PatientDto save (PatientDto patientDto);
+    void save (PatientDto patientDto);
 }

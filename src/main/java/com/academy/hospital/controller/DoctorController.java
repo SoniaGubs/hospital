@@ -2,6 +2,7 @@ package com.academy.hospital.controller;
 
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.CardSetDiagnosesDto;
+import com.academy.hospital.dto.DiagnosisDto;
 import com.academy.hospital.model.entity.Card;
 import com.academy.hospital.model.entity.Diagnosis;
 import com.academy.hospital.service.DiagnosisService;
@@ -21,6 +22,7 @@ import java.util.List;
 public class DoctorController {
 
     private final CardService cardService;
+    private final DiagnosisService diagnosisService;
 
     @GetMapping("/doctor")
     public String showMainPageDoctor() {
@@ -34,7 +36,7 @@ public class DoctorController {
         return "doctorPages/cardDetailsForDoctor";
     }
 
-    @GetMapping("/showAllDiagnoses")
+   @GetMapping("/showAllDiagnoses")
     public String getAllDiagnoses(@RequestParam(value = "id") Integer id, Model model) {
         CardSetDiagnosesDto cardSetDiagnosesDto = cardService.createCardSetDiagnosesDto(id);
         model.addAttribute("cardSetDiagnosesDto", cardSetDiagnosesDto);
@@ -42,27 +44,27 @@ public class DoctorController {
     }
 
     @PostMapping("/updateCard")
-    public String updateCard(@ModelAttribute CardSetDiagnosesDto cardSetDiagnosesDto, Model model) {
-        CardDto card = cardService.save(cardSetDiagnosesDto);
+    public String updateCard(@ModelAttribute(value = "cardSetDiagnosesDto") CardSetDiagnosesDto cardSetDiagnosesDto, Model model) {
+        CardDto card = cardService.updateDiagnosis(cardSetDiagnosesDto);
         model.addAttribute("card", card);
         return "doctorPages/cardDetailsForDoctor";
     }
 
-
-/*    @GetMapping("/showAllDiagnoses")
-    public String getAllDiagnoses(@RequestParam(value = "id") Integer id, Model model){
-        List<Diagnosis> diagnoses = diagnosisService.findAll();
-        model.addAttribute("diagnoses", diagnoses);
-        model.addAttribute("cardId", id);
-        return "diagnoses";
+/*
+   @PostMapping("/showAllDiagnoses")
+    public String getAllDiagnoses(@ModelAttribute(name = "card") CardDto card, Model model){
+       CardSetDiagnosesDto cardSetDiagnosesDto = cardService.createCardSetDiagnosesDto(card);
+        model.addAttribute("cardSetDiagnosesDto", cardSetDiagnosesDto);
+        return "doctorPages/diagnoses";
     }
 
-    @GetMapping("/updateCard")
-    public String updateCard (@RequestParam List<Diagnosis> diagnoses, @RequestParam (name = "cardId") Integer id,  Model model){
-       CardDto card = cardService.setDiagnosis(diagnoses,id);
-       model.addAttribute("card",card);
-        return "cardDetailsForDoctor";
+ @PostMapping ("/updateCard")
+    public String updateCard (@ModelAttribute CardSetDiagnosesDto cardSetDiagnosesDto,  Model model){
+     CardDto cardDto = cardService.updateDiagnosis(cardSetDiagnosesDto);
+     model.addAttribute("card", cardDto);
+        return "doctorPages/cardDetailsForDoctor";
     }*/
+
 
 
 

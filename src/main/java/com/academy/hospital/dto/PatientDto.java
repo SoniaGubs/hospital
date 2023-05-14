@@ -2,6 +2,7 @@ package com.academy.hospital.dto;
 
 import com.academy.hospital.model.entity.Card;
 import com.academy.hospital.model.entity.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,9 +19,10 @@ public class PatientDto {
     private Gender gender;
     private String passport;
 
-    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dob;
     private String phone;
 
-   // private List<CardDto> cards;
+/*    @JsonIgnore
+    private List<CardDto> cards;*/
 }

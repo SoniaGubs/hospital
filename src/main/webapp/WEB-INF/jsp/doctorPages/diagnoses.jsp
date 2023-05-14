@@ -15,8 +15,9 @@ Diagnoses:
 <c:url value="/updateCard" var="updateCardAction"/>
 
 <sf:form method="post" action="${updateCardAction}" modelAttribute="cardSetDiagnosesDto">
+
     <c:forEach items="${cardSetDiagnosesDto.startDiagnoses}" var="startDiagnosis">
-        <label> <sf:checkbox path="startDiagnoses" value="${startDiagnosis.id}" checked="checked"/>
+        <label> <sf:checkbox path="startDiagnoses" value="${startDiagnosis.id}" checked="checked" />
                 ${startDiagnosis.code} ${startDiagnosis.diagnosisName}</label> <br>
     </c:forEach>
     <c:forEach items="${cardSetDiagnosesDto.allRemainingDiagnoses}" var="allRemainingDiagnoses">
@@ -30,6 +31,8 @@ Diagnoses:
     <input type="submit" value="Set diagnoses">
 
 </sf:form>
+
+
 
 
 </body>

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.academy.hospital.model.entity.TreatmentType" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 <html>
 <head>
@@ -42,7 +43,10 @@ Operations:
 </c:forEach>
 <br>
 
+
 <a href="<c:url value="/showAllDiagnoses?id=${card.id}"/>"> Set diagnoses</a>
+
+
 
 
 <br>

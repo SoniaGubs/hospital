@@ -19,13 +19,13 @@ public class CardDto {
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     private LocalDate dateOfDischarge;
 
-    private List<Diagnosis> startDiagnoses;
+    private List<DiagnosisDto> startDiagnoses;
 
     private String descriptionStartDiagnosis;
 
     private String descriptionFinalDiagnosis;
 
-    private List<Diagnosis> finalDiagnosis;
+    private List<DiagnosisDto> finalDiagnosis;
 
     private List<Treatment> treatments;
 

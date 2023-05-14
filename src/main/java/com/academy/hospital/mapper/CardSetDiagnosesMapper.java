@@ -9,7 +9,10 @@ import org.mapstruct.Mapper;
 public interface CardSetDiagnosesMapper {
 
     CardSetDiagnosesDto toDto (Card model);
+    CardSetDiagnosesDto cardDtotoCardSetDiagnosesDto (CardDto cardDto);
 
     Card toModel (CardSetDiagnosesDto cardSetDiagnosesDto);
+
+
 
 }

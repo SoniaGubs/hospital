@@ -43,8 +43,8 @@ public class ReceptionistController {
 
     @PostMapping("/createUpdatePatient")
     public String createUpdatePatient(@ModelAttribute("patient") PatientDto createPatient, Model model) {
-        PatientDto patient = patientService.save(createPatient);
-        model.addAttribute("patient", patient);
+        patientService.save(createPatient);
+        model.addAttribute("patient", createPatient);
         return "receptionistPages/patientDetails";
     }
 
