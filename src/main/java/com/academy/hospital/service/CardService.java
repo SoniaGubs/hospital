@@ -18,6 +18,7 @@ public interface CardService {
 
     CardSetDiagnosesDto createCardSetDiagnosesDto (Integer id);
 
-    CardDto save (CardSetDiagnosesDto cardSetDiagnosesDto);
+   // CardDto updateDiagnosis (CardSetDiagnosesDto cardSetDiagnosesDto);
+    CardDto updateDiagnosis (CardSetDiagnosesDto cardSetDiagnosesDto);
     void save (CardDto cardDto);
 }

@@ -15,15 +15,16 @@ Diagnoses:
 <c:url value="/updateCard" var="updateCardAction"/>
 
 <sf:form method="post" action="${updateCardAction}" modelAttribute="cardSetDiagnosesDto">
-    <c:forEach items="${cardSetDiagnosesDto.startDiagnoses}" var="startDiagnosis">
-        <label> <sf:checkbox path="startDiagnoses" value="${startDiagnosis.id}" checked="checked"/>
-                ${startDiagnosis.code} ${startDiagnosis.diagnosisName}</label> <br>
+
+    <c:forEach items="${allDiagnoses}" var="diagnosis">
+
+        <label> <sf:checkbox path="startDiagnoses" value="${diagnosis}"/>
+                ${diagnosis.code} ${diagnosis.diagnosisName} </label> <br>
+
     </c:forEach>
-    <c:forEach items="${cardSetDiagnosesDto.allRemainingDiagnoses}" var="allRemainingDiagnoses">
-        <label> <sf:checkbox path="startDiagnoses" value="${allRemainingDiagnoses.id}"/>
-                ${allRemainingDiagnoses.code} ${allRemainingDiagnoses.diagnosisName} </label> <br>
-    </c:forEach>
-    comment<br>
+
+
+    <label> Description </label><br>
     <sf:input path="descriptionStartDiagnosis"/> <br>
     <sf:hidden path="id"/>
     <input type="reset">

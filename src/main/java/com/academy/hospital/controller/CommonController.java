@@ -23,14 +23,6 @@ public class CommonController {
     private final TreatmentService treatmentService;
 
 
- /*   @GetMapping("/allReceptions")
-    public String getAll(Model model) {
-        List <Card> cards = cardService.findAll();
-        model.addAttribute("allReceptions", cards);
-        return "allReceptions";
-    }
-*/
-
     @GetMapping("/sicks")
     public String getAllSick(Model model) {
         List <CardDto> cards = cardService.findSick();

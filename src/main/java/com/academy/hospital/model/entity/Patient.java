@@ -31,8 +31,8 @@ public class Patient {
     private LocalDate dob;
     private String phone;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "patient")
-    private List<Card> cards;
+/*    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "patient")
+    private List<Card> cards;*/
 
 /*    @Override
     public String toString() {

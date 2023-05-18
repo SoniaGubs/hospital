@@ -1,13 +1,14 @@
 package com.academy.hospital.dto;
 
 import com.academy.hospital.model.entity.*;
-import lombok.Data;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
+
 public class CardDto {
 
     private Integer id;
@@ -19,14 +20,14 @@ public class CardDto {
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     private LocalDate dateOfDischarge;
 
-    private List<Diagnosis> startDiagnoses;
+    private List<DiagnosisDto> startDiagnoses;
 
     private String descriptionStartDiagnosis;
 
     private String descriptionFinalDiagnosis;
 
-    private List<Diagnosis> finalDiagnosis;
+    private List<DiagnosisDto> finalDiagnosis;
 
-    private List<Treatment> treatments;
+    //private List<TreatmentDto> treatments;
 
 }

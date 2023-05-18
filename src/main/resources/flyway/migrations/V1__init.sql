@@ -74,14 +74,13 @@ CREATE TABLE card_diagnosis
 
 CREATE TABLE treatment
 (
-    id             int         NOT NULL AUTO_INCREMENT,
-    card_id        int         NOT NULL,
-    staff_id       int          DEFAULT NULL,
-    treatment_type varchar(45) NOT NULL,
-    drug           varchar(200) DEFAULT NULL,
-    operation      varchar(200) DEFAULT NULL,
-    procedures     varchar(200) DEFAULT NULL,
-    status         varchar(45)  DEFAULT NULL,
+    id                   int         NOT NULL AUTO_INCREMENT,
+    card_id              int         NOT NULL,
+    date_of_prescription date        NOT NULL,
+    treatment_type       varchar(45) NOT NULL,
+    prescription         varchar(300) DEFAULT NULL,
+    date_of_completion   date         DEFAULT NULL,
+    staff_id             int          DEFAULT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (card_id) REFERENCES card (id),
     FOREIGN KEY (staff_id) REFERENCES staff (id)

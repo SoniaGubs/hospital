@@ -1,7 +1,6 @@
 package com.academy.hospital.service;
 
 import com.academy.hospital.dto.PatientDto;
-import com.academy.hospital.model.entity.Patient;
 
 import java.util.List;
 

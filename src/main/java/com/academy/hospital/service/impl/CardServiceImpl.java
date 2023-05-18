@@ -2,13 +2,16 @@ package com.academy.hospital.service.impl;
 
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.CardSetDiagnosesDto;
+import com.academy.hospital.dto.DiagnosisDto;
 import com.academy.hospital.mapper.CardMapper;
 import com.academy.hospital.mapper.CardSetDiagnosesMapper;
+import com.academy.hospital.mapper.DiagnosisMapper;
 import com.academy.hospital.model.entity.Card;
 import com.academy.hospital.model.entity.Diagnosis;
 import com.academy.hospital.model.repository.CardRepository;
 import com.academy.hospital.model.repository.DiagnosisRepository;
 import com.academy.hospital.service.CardService;
+import com.academy.hospital.service.DiagnosisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,8 @@ public class CardServiceImpl implements CardService {
     private final CardMapper cardMapper;
     private final CardSetDiagnosesMapper cardSetDiagnosesMapper;
     private final DiagnosisRepository diagnosisRepository;
+    private final DiagnosisMapper diagnosisMapper;
+    private final DiagnosisService diagnosisService;
 
     @Override
     public List<CardDto> findAll() {
@@ -40,31 +45,28 @@ public class CardServiceImpl implements CardService {
         return cardMapper.modelsToDto(cardRepository.findByDateOfDischargeIsNull());
     }
 
- /*   @Override
-    public CardDto setDiagnosis(List<Diagnosis> diagnoses, Integer id) {
-        Card card = cardRepository.getReferenceById(id);
-        card.setStartDiagnoses(diagnoses);
-       return cardMapper.toDto(cardRepository.save(card));
-    }*/
+
 
     public CardSetDiagnosesDto createCardSetDiagnosesDto(Integer id) {
         Card card = cardRepository.getReferenceById(id);
         CardSetDiagnosesDto cardSetDiagnosesDto = cardSetDiagnosesMapper.toDto(card);
-        List<Diagnosis> startDiagnoses = card.getStartDiagnoses();
-        List<Diagnosis> allRemainingDiagnoses = new ArrayList<>(diagnosisRepository.findAll());
-        allRemainingDiagnoses.removeAll(startDiagnoses);
-        allRemainingDiagnoses.sort(Comparator.comparing(Diagnosis::getCode));
-        cardSetDiagnosesDto.setAllRemainingDiagnoses(allRemainingDiagnoses);
+
         return cardSetDiagnosesDto;
     }
 
+
     @Override
-    public CardDto save(CardSetDiagnosesDto cardSetDiagnosesDto) {
+    public CardDto updateDiagnosis(CardSetDiagnosesDto cardSetDiagnosesDto) {
         Card card = cardRepository.getReferenceById(cardSetDiagnosesDto.getId());
-        card.setStartDiagnoses(cardSetDiagnosesDto.getStartDiagnoses());
+        List<Diagnosis> startDiagnoses = diagnosisMapper.dtoToModels(cardSetDiagnosesDto.getStartDiagnoses());
+        card.setStartDiagnoses(startDiagnoses);
         card.setDescriptionStartDiagnosis(cardSetDiagnosesDto.getDescriptionStartDiagnosis());
-        return cardMapper.toDto(cardRepository.save(card));
+        cardRepository.save(card);
+        CardDto cardDto = cardMapper.toDto(card);
+        return cardDto;
     }
+
+
 
     @Override
     public void save(CardDto cardDto) {
@@ -73,11 +75,4 @@ public class CardServiceImpl implements CardService {
     }
 
 
- /*   @Override
-    public void setDiagnosis(Diagnosis diagnosis, Integer receptionId) {
-        Card card = receptionRepository.getReferenceById(receptionId);
-        card.setStartDiagnosis(diagnosis);
-
-        receptionRepository.save(card);
-    }*/
 }

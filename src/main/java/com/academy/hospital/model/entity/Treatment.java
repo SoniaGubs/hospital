@@ -1,11 +1,14 @@
 package com.academy.hospital.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -17,21 +20,26 @@ public class Treatment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    //@ManyToOne
-    //private Card card;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "card_id")
+    private Card card;
+
     @Column(name = "treatment_type")
     @Enumerated(EnumType.STRING)
     private TreatmentType treatmentType;
-    private String drug;
-    private String operation;
-    @Column(name = "procedures")
-    private String procedure;
+
+    private String prescription;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "date_of_prescription")
+    private LocalDate dateOfPrescription;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "date_of_completion")
+    private LocalDate dateOfCompletion;
 
     @ManyToOne
+    @JoinColumn(name = "staff_id")
     private Staff staff;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
 
 }

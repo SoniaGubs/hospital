@@ -40,24 +40,12 @@ public class PatientServiceImpl implements PatientService {
         }
     }
 
-/*    @Override
-    public List<PatientDto> findAllBySurnameAndNameAndPatronymic(String surname, String name, String patronymic) {
-        return patientMapper.modelsToDto(patientRepository.findAllBySurnameAndNameAndPatronymicOrderBySurnameAsc(surname, name, patronymic));
-    }*/
 
     @Override
     public PatientDto save(PatientDto patientDto) {
         Patient patient = patientMapper.toModel(patientDto);
-/*        PatientDto patientToSave = new PatientDto();
-        patientToSave.setName(patientDto.getName());
-        patientToSave.setSurname(patientDto.getSurname());
-        patientToSave.setDob(patientDto.getDob());
-        patientToSave.setPatronymic(patientDto.getPatronymic());
-        patientToSave.setGender(patientDto.getGender());
-        patientToSave.setPassport(patientDto.getPassport());
-        patientToSave.setPhone(patientDto.getPhone());
-        */
-        return patientMapper.toDto(patientRepository.save(patient));
+        patientRepository.save(patient);
+        return patientMapper.toDto(patient);
     }
 
 
