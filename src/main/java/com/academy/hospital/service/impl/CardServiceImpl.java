@@ -51,13 +51,6 @@ public class CardServiceImpl implements CardService {
         Card card = cardRepository.getReferenceById(id);
         CardSetDiagnosesDto cardSetDiagnosesDto = cardSetDiagnosesMapper.toDto(card);
 
-        List<Diagnosis> startDiagnoses = cardSetDiagnosesDto.getStartDiagnoses();
-        List<Diagnosis> allRemainingDiagnoses =diagnosisService.findAll();
-               // diagnosisMapper.modelsToDto(diagnosisRepository.findAll());
-        allRemainingDiagnoses.removeAll(startDiagnoses);
-        allRemainingDiagnoses.sort(Comparator.comparing(Diagnosis::getCode));
-        cardSetDiagnosesDto.setAllRemainingDiagnoses(allRemainingDiagnoses);
-
         return cardSetDiagnosesDto;
     }
 
@@ -65,9 +58,12 @@ public class CardServiceImpl implements CardService {
     @Override
     public CardDto updateDiagnosis(CardSetDiagnosesDto cardSetDiagnosesDto) {
         Card card = cardRepository.getReferenceById(cardSetDiagnosesDto.getId());
-        card.setStartDiagnoses((cardSetDiagnosesDto.getStartDiagnoses()));
+        List<Diagnosis> startDiagnoses = diagnosisMapper.dtoToModels(cardSetDiagnosesDto.getStartDiagnoses());
+        card.setStartDiagnoses(startDiagnoses);
         card.setDescriptionStartDiagnosis(cardSetDiagnosesDto.getDescriptionStartDiagnosis());
-        return cardMapper.toDto(cardRepository.save(card));
+        cardRepository.save(card);
+        CardDto cardDto = cardMapper.toDto(card);
+        return cardDto;
     }
 
 

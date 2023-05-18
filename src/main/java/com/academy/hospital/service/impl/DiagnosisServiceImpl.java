@@ -21,8 +21,8 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
 
     @Override
-    public List<Diagnosis> findAll() {
-        return diagnosisRepository.findAll();
+    public List<DiagnosisDto> findAll() {
+        return diagnosisMapper.modelsToDto(diagnosisRepository.findAll());
     }
 
 

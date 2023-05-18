@@ -40,15 +40,15 @@ VALUES (1, 1, 1),
        (5, 4, 1);
 
 
-INSERT INTO treatment (id, card_id, staff_id, treatment_type, drug, operation, procedures, status)
-VALUES (1, 1, 1, 'DRUG', 'Alamagel', 'null', 'null', 'COMPLETED'),
-       (2, 1, 3, 'PROCEDURE', 'null', 'null', 'Фиброгастроскопия', 'COMPLETED'),
-       (3, 1, 3, 'DRUG', 'Omez 40mg', 'null', 'null', 'COMPLETED'),
-       (4, 2, null, 'PROCEDURE', 'null', 'null', 'Узи брюшной-полости', 'NOT_COMPLETED'),
-       (5, 2, null, 'OPERATION', 'null', 'Аппендэктомия', 'null', 'NOT_COMPLETED'),
-       (6, 2, null, 'DRUG', 'Ceftriaxone', 'null', 'null', 'NOT_COMPLETED'),
-       (7, 2, null, 'DRUG', 'Nolpasa 40mg', 'null', 'null', 'NOT_COMPLETED'),
-       (8, 3, null, 'DRUG', 'De-nol', 'null', 'null', 'NOT_COMPLETED'),
-       (9, 3, null, 'DRUG', 'Peptipak', 'null', 'null', 'NOT_COMPLETED'),
-       (10, 4, null, 'DRUG', 'Alamagel', 'null', 'null', 'NOT_COMPLETED'),
-       (11, 4, null, 'PROCEDURE', 'null', 'null', 'Фиброгастроскопия', 'NOT_COMPLETED');
+INSERT INTO treatment (id, card_id, staff_id, treatment_type, prescription, date_of_prescription, date_of_completion)
+VALUES (1, 1, 1, 'DRUG', 'Alamagel', '2023-03-24', '2023-03-24'),
+       (2, 1, 3, 'PROCEDURE', 'Фиброгастроскопия', '2023-03-25', '2023-03-25'),
+       (3, 1, 3, 'DRUG', 'Omez 40mg', '2023-03-24', '2023-03-25'),
+       (4, 2, null, 'PROCEDURE', 'Узи брюшной-полости', '2023-03-24', null),
+       (5, 2, null, 'OPERATION', 'Аппендэктомия', '2023-03-24', null),
+       (6, 2, null, 'DRUG', 'Ceftriaxone', '2023-03-24', null),
+       (7, 2, null, 'DRUG', 'Nolpasa 40mg', '2023-03-26', null),
+       (8, 3, null, 'DRUG', 'De-nol', '2023-03-27', null),
+       (9, 3, null, 'DRUG', 'Peptipak', '2023-03-26', null),
+       (10, 4, null, 'DRUG', 'Alamagel', '2023-03-29', null),
+       (11, 4, null, 'PROCEDURE', 'Фиброгастроскопия', '2023-03-29', null);

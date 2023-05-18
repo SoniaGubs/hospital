@@ -42,6 +42,10 @@
 <button type="submit"> ok </button>
 </sf:form>
 
+<br>
+
+
+<br>
 
 
 <a href="<c:url value="/receptionist"/>"> Back to main page </a>

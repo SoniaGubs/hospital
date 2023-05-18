@@ -35,16 +35,16 @@ public class ReceptionistController {
         if (updatePatient != null) {
             model.addAttribute("patient", updatePatient);
         } else {
-            PatientDto patientDto = new PatientDto();
-            model.addAttribute("patient", patientDto);
+            PatientDto createPatient = new PatientDto();
+            model.addAttribute("patient", createPatient);
         }
         return "receptionistPages/createUpdatePatient";
     }
 
     @PostMapping("/createUpdatePatient")
     public String createUpdatePatient(@ModelAttribute("patient") PatientDto createPatient, Model model) {
-        patientService.save(createPatient);
-        model.addAttribute("patient", createPatient);
+        PatientDto patientDto = patientService.save(createPatient);
+        model.addAttribute("patient", patientDto);
         return "receptionistPages/patientDetails";
     }
 
@@ -63,12 +63,9 @@ public class ReceptionistController {
         card.setDateOfAdmission(LocalDate.now());
         card.setPatient(patientDto);
         cardService.save(card);
-
-        return "receptionistPages/receptionistMainPage";
+        model.addAttribute("card", card);
+        return "receptionistPages/successCreateCard";
     }
-
-
-
 
 
 }

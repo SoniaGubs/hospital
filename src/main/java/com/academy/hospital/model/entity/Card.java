@@ -1,6 +1,7 @@
 package com.academy.hospital.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -60,17 +61,10 @@ public class Card {
             joinColumns = {@JoinColumn(name ="card_id")},
             inverseJoinColumns = {@JoinColumn(name = "diagnosis_id")}
     ) private List<Diagnosis> finalDiagnosis;
-/*
-    @OneToMany
+
+
+   /* @OneToMany
     @JoinColumn(name = "card_id")
-    private List<CardDiagnosis> finalDiagnosis;
-*/
-
-
-
-    @OneToMany
-    @JoinColumn(name = "card_id")
-    private List<Treatment> treatments;
-
+    private List<Treatment> treatments;*/
 
 }

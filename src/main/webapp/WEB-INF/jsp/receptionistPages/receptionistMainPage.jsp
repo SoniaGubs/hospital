@@ -16,8 +16,6 @@ Hello, ${staff.name} ${staff.surname} ! <br>
     <label>Name: </label> <input name="name"> <br>
     <label>Patronymic: </label> <input name="patronymic"> <br>
     <button type="submit">Search patient</button>
-
-    <input type="submit" value="Search patient">
 </form>
 
 

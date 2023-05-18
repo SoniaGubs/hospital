@@ -8,13 +8,8 @@ import java.util.List;
 
 public interface DiagnosisService  {
 
-  //  Diagnosis findDiagnosis(Integer id);
+    List <DiagnosisDto> findAll();
 
-    List <Diagnosis> findAll();
-
-
-
-  //  Diagnosis save (String name);
 
 
 
