@@ -1,17 +1,14 @@
 package com.academy.hospital.controller;
 
-import com.academy.hospital.dto.CardDto;
-import com.academy.hospital.dto.CardSetDiagnosesDto;
-import com.academy.hospital.dto.DiagnosisDto;
-import com.academy.hospital.dto.TreatmentDto;
-import com.academy.hospital.service.DiagnosisService;
-import com.academy.hospital.service.CardService;
-import com.academy.hospital.service.TreatmentService;
+import com.academy.hospital.dto.*;
+import com.academy.hospital.model.entity.Role;
+import com.academy.hospital.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -21,28 +18,34 @@ public class DoctorController {
     private final CardService cardService;
     private final DiagnosisService diagnosisService;
     private final TreatmentService treatmentService;
+    private final PatientService patientService;
+    private final StaffService staffService;
 
-    @GetMapping("/doctor")
-    public String showMainPageDoctor() {
+
+    @GetMapping("/doctor/doctorMainPage")
+    public String showMainPageDoctor(Model model) {
+        List <CardDto> cards = cardService.findSick();
+        model.addAttribute("sicks", cards);
         return "doctorPages/doctorMainPage";
+
     }
 
-    @GetMapping("/card")
-    public String findCard(@RequestParam(value = "id") Integer id, Model model) {
-        CardDto card = cardService.findCard(id);
-        List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(id);
-        List<TreatmentDto> treatmentsNotCompl = treatmentService.findNotCompletedTreatment(id);
+    @GetMapping("/doctor/card")
+    public String findCard(@RequestParam(value = "id") Integer cardId, Model model) {
+        CardDto card = cardService.findCard(cardId);
+        List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(cardId);
+        List<TreatmentDto> treatmentsNotCompl = treatmentService.findNotCompletedTreatment(cardId);
         model.addAttribute("card", card);
         model.addAttribute("treatmentsCompl", treatmentsCompl);
         model.addAttribute("treatmentsNotCompl", treatmentsNotCompl);
         return "doctorPages/cardDetailsForDoctor";
     }
 
-    /*------------------------*/
-    //Set or update diagnoses
-    /*------------------------*/
+    /*-------------------------*/
+    //  Set or update diagnoses
+    /*-------------------------*/
 
-    @GetMapping("/showAllDiagnoses")
+    @GetMapping("/doctor/showAllDiagnoses")
     public String getAllDiagnoses(@RequestParam(value = "id") Integer id, Model model) {
         CardSetDiagnosesDto cardSetDiagnosesDto = cardService.createCardSetDiagnosesDto(id);
         List<DiagnosisDto> diagnosisDtos = diagnosisService.findAll();
@@ -51,22 +54,18 @@ public class DoctorController {
         return "doctorPages/diagnoses";
     }
 
-    @PostMapping("/updateCard")
-    public String updateCard(@ModelAttribute CardSetDiagnosesDto cardSetDiagnosesDto, Model model) {
+    @PostMapping("/doctor/setDiagnosis")
+    public String setDiagnosis(@ModelAttribute CardSetDiagnosesDto cardSetDiagnosesDto, Model model) {
         CardDto card = cardService.updateDiagnosis(cardSetDiagnosesDto);
-        List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(card.getId());
-        List<TreatmentDto> treatmentsNotCompl = treatmentService.findNotCompletedTreatment(card.getId());
-        model.addAttribute("treatmentsCompl", treatmentsCompl);
-        model.addAttribute("treatmentsNotCompl", treatmentsNotCompl);
-        model.addAttribute("card", card);
-        return "doctorPages/cardDetailsForDoctor";
+        Integer id = card.getId();
+        return "redirect:/doctor/card?id=" + id;
     }
 
-    /*------------------------*/
-    // Set or update treatments
-    /*------------------------*/
+    /*------------------------------*/
+    // Set, update, delete treatments
+    /*------------------------------*/
 
-    @GetMapping("/addNewTreatment")
+    @GetMapping("/doctor/addNewTreatment")
     public String addNewTreatment(@RequestParam(value = "cardId") Integer id, Model model) {
         TreatmentDto treatmentNew = new TreatmentDto();
         treatmentNew.setCard(cardService.findCard(id));
@@ -74,29 +73,121 @@ public class DoctorController {
         return "doctorPages/createUpdateTreatment";
     }
 
-    @GetMapping("/updateTreatment")
+    @GetMapping("/doctor/updateTreatment")
     public String updateTreatment(@RequestParam Integer id, Model model) {
         TreatmentDto treatmentDto = treatmentService.findById(id);
         model.addAttribute("treatment", treatmentDto);
         return "doctorPages/createUpdateTreatment";
     }
 
-    @PostMapping("/createTreatment")
+    @PostMapping("/doctor/createTreatment")
     public String createTreatment(@ModelAttribute TreatmentDto treatment, Model model) {
         treatmentService.save(treatment);
-
         Integer cardId = treatment.getCard().getId();
-        CardDto card = cardService.findCard(cardId);
-        List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(cardId);
-        List<TreatmentDto> treatmentsNotCompl = treatmentService.findNotCompletedTreatment(cardId);
+        return "redirect:/doctor/card?id=" + cardId;
+    }
+
+    @GetMapping("/doctor/deleteTreatment")
+    public String deleteTreatment(@RequestParam Integer id, @RequestParam Integer cardId) {
+        treatmentService.deleteTreatment(id);
+        return "redirect:/doctor/card?id=" + cardId;
+    }
+
+
+    /*------------------------------*/
+    // medical history
+    /*------------------------------*/
+
+    @GetMapping("/doctor/showMedicalHistory")
+    public String showMedicalHistory (@RequestParam Integer id, Model model) {
+        List<CardDto> card = cardService.findAllCardByPatient(id);
+        model.addAttribute("allPatientsCards", card);
+        return "doctorPages/medicalHistory";
+    }
+
+    @GetMapping("/doctor/showDetailsMedicalHistory/{id}")
+    public String getTreatmentsDetail (@PathVariable Integer id, Model model) {
+        List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(id);
         model.addAttribute("treatmentsCompl", treatmentsCompl);
-        model.addAttribute("treatmentsNotCompl", treatmentsNotCompl);
-        model.addAttribute("card", card);
-        return "doctorPages/cardDetailsForDoctor";
+        return "doctorPages/detailsMedicalHistory";
+    }
+
+
+    /*------------------------------*/
+    //  set doctor
+    /*------------------------------*/
+
+
+    @GetMapping("/doctor/showSetDoctor")
+    public String showSetDoctor(@RequestParam Integer id, Model model) {
+        List<StaffDto> doctors = staffService.findByRole(Role.ROLE_DOCTOR);
+        model.addAttribute("cardId", id);
+        model.addAttribute("doctors", doctors);
+        return "doctorPages/setDoctor";
+    }
+
+    @GetMapping("/doctor/setDoctor")
+    public String setDoctor(@RequestParam Integer staffId, @RequestParam Integer cardId) {
+        CardDto cardDto = cardService.findCard(cardId);
+        cardService.setDoctor(cardDto, staffId);
+        return "redirect:/doctor/card?id=" + cardId;
     }
 
 
 
+    /*------------------------------*/
+    // Do treatment
+    /*------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*------------------------------*/
+    // Discharge
+    /*------------------------------*/
+
+    @GetMapping("/doctor/goToDischarge")
+    public String goToDischarge(@RequestParam Integer id, Model model) {
+        CardDto cardDto = cardService.findCard(id);
+        cardDto.setDateOfDischarge(LocalDate.now());
+        List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(id);
+        model.addAttribute("treatmentsCompl", treatmentsCompl);
+        model.addAttribute("card", cardDto);
+        return "doctorPages/discharge";
+    }
+
+    @GetMapping("/doctor/discharge")
+    public String discharge(@RequestParam Integer id, Model model) {
+        cardService.discharge(id);
+        return "redirect:/doctor/doctorMainPage";
+    }
+
+
+
+
+  /*  @GetMapping("/goToDischarge")
+    public String goToDischarge(@RequestParam Integer id, Model model) {
+           CardDto cardDto = cardService.findCard(id);
+        if((cardDto.getDiagnoses())==null || cardDto.getStaff()==null){
+            return "redirect:/card?id=" + id;
+        }else{
+            cardService.discharge(cardDto);
+            return "sicks";
+        }
+    }
+*/
 
 
 }

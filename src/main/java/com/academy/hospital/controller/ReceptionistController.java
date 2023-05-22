@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -18,20 +17,20 @@ public class ReceptionistController {
     private final PatientService patientService;
     private final CardService cardService;
 
-    @GetMapping("/receptionist")
+    @GetMapping("/receptionist/mainPage")
     public String showMainPageReceptionist() {
         return "receptionistPages/receptionistMainPage";
     }
 
-    @GetMapping("/searchPatient")
+    @GetMapping("/receptionist/searchPatient")
     public String searchPatient(@RequestParam String name, @RequestParam String surname, @RequestParam String patronymic, Model model) {
         List<PatientDto> patients = patientService.findByParameters(surname, name, patronymic);
         model.addAttribute("patients", patients);
         return "receptionistPages/findPatient";
     }
 
-    @RequestMapping("/showCreateUpdatePatient")
-    public String showCreateUpdatePatient(@ModelAttribute("patient") PatientDto updatePatient, Model model) {
+    @RequestMapping ("/receptionist/showCreateUpdatePatient")
+    public String showFormPatient(@ModelAttribute("patient") PatientDto updatePatient, Model model) {
         if (updatePatient != null) {
             model.addAttribute("patient", updatePatient);
         } else {
@@ -41,14 +40,14 @@ public class ReceptionistController {
         return "receptionistPages/createUpdatePatient";
     }
 
-    @PostMapping("/createUpdatePatient")
+    @PostMapping("/receptionist/createUpdatePatient")
     public String createUpdatePatient(@ModelAttribute("patient") PatientDto createPatient, Model model) {
         PatientDto patientDto = patientService.save(createPatient);
         model.addAttribute("patient", patientDto);
         return "receptionistPages/patientDetails";
     }
 
-    @GetMapping("/patient")
+    @GetMapping("/receptionist/patient")
     public String findPatient(@RequestParam(value = "id") Integer id, Model model) {
         PatientDto patientDto = patientService.find(id);
         model.addAttribute("patient", patientDto);
@@ -56,13 +55,10 @@ public class ReceptionistController {
     }
 
 
-    @GetMapping("/createCard")
+    @GetMapping("/receptionist/createCard")
     public String createCard(@RequestParam(value = "id") Integer id, Model model) {
         PatientDto patientDto = patientService.find(id);
-        CardDto card = new CardDto();
-        card.setDateOfAdmission(LocalDate.now());
-        card.setPatient(patientDto);
-        cardService.save(card);
+        CardDto card = cardService.save(patientDto);
         model.addAttribute("card", card);
         return "receptionistPages/successCreateCard";
     }

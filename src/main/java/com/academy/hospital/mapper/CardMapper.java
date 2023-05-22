@@ -6,7 +6,7 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import java.util.List;
 
-@Mapper(uses = {DiagnosisMapper.class, PatientMapper.class, TreatmentMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR, componentModel = "spring")
+@Mapper(uses = {DiagnosisMapper.class, PatientMapper.class, StaffMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR, componentModel = "spring")
 public interface CardMapper {
 
     CardDto toDto(Card model);

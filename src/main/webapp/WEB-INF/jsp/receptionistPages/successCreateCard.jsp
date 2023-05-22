@@ -3,19 +3,36 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+
     <title>Success Card</title>
+    <link rel="stylesheet" href="/css/simpleStyle.css">
+
 </head>
 <body>
 
-Date of admission : ${card.dateOfAdmission} <br>
-Surname: ${card.patient.surname}<br>
-Name: ${card.patient.name} <br>
-Patronymic: ${card.patient.patronymic} <br>
+<h1>карта создана</h1>
+
+<div class="container">
+    <div class="form">
+        <div class="form-row">
+            <label>Дата поступления:</label> ${card.dateOfAdmission}
+        </div>
+        <div class="form-row">
+            <label>Фамилия:</label> ${card.patient.surname}
+        </div>
+        <div class="form-row">
+            <label>Имя:</label> ${card.patient.name}
+        </div>
+        <div class="form-row">
+            <label>Отчество:</label> ${card.patient.patronymic}
+        </div>
+    </div>
 
 
-<a href="<c:url value="/receptionist"/>"> Back to main page </a>
 
-<br>
-
+    <div class="menu">
+        <a href="<c:url value="/receptionist/mainPage"/>"> Назад на главное меню </a>
+    </div>
+</div>
 </body>
 </html>

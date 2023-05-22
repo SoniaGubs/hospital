@@ -21,21 +21,11 @@ public class Staff {
     private String surname;
     private String patronymic;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
     private String email;
     private String phone;
 
     @OneToOne
-    private Credential credential;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-
-/*
-    //  @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OneToMany(mappedBy = "staff")
-    @JsonIgnoreProperties("staff")
-    // @JoinColumn(name = "staff_id")
-    private List<Card> cards;
-}
-*/
 }

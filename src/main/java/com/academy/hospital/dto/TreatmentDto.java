@@ -13,7 +13,7 @@ public class TreatmentDto {
     private Integer id;
     private TreatmentType treatmentType;
     private String prescription;
-    private Staff staff;
+    private StaffDto staff;
     private CardDto card;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

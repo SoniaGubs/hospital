@@ -3,40 +3,56 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+
     <title>Patient</title>
+    <link rel="stylesheet" href="/css/simpleStyle.css">
 </head>
-<body>
 
-Surname: ${patient.surname}<br>
-Name: ${patient.name} <br>
-Patronymic: ${patient.patronymic} <br>
-Date of birth: ${patient.dob}<br>
-Gender ${patient.gender}<br>
-Phone: ${patient.phone}<br>
-Passport: ${patient.passport}<br>
+<h1>Пациент</h1>
 
+    <div class="form">
+        <div class="form-row">
+            <label>Фамилия:</label> ${patient.surname}
+        </div>
+        <div class="form-row">
+            <label>Имя:</label> ${patient.name}
+        </div>
+        <div class="form-row">
+            <label>Отчество:</label> ${patient.patronymic}
+        </div>
+        <div class="form-row">
+            <label>Дата рождения:</label> ${patient.dob}
+        </div>
+        <div class="form-row">
+            <label>Пол:</label> ${patient.gender}
+        </div>
+        <div class="form-row">
+            <label>Телефон:</label> ${patient.phone}
+        </div>
+        <div class="form-row">
+            <label>Паспортный номер:</label> ${patient.passport}
+        </div>
+    </div>
 
-<c:url value="/showCreateUpdatePatient" var="updatePatientAction"/>
-<sf:form method="post" action="${updatePatientAction}" modelAttribute="patient">
-    <sf:hidden path="id" /> <br>
-    <sf:hidden path="surname" /> <br>
-    <sf:hidden path="name" /> <br>
-    <sf:hidden path="patronymic"/> <br>
-    <sf:hidden path="gender"/> <br>
-    <sf:hidden path="dob" /> <br>
-    <sf:hidden path="passport"/> <br>
-    <sf:hidden path="phone"/> <br>
-    <input type="submit" value="Update">
-</sf:form>
+    <c:url value="/receptionist/showCreateUpdatePatient" var="updatePatientAction"/>
+    <sf:form method="post" action="${updatePatientAction}" modelAttribute="patient">
+        <sf:hidden path="id"/>
+        <sf:hidden path="surname"/>
+        <sf:hidden path="name"/>
+        <sf:hidden path="patronymic"/>
+        <sf:hidden path="gender"/>
+        <sf:hidden path="dob"/>
+        <sf:hidden path="passport"/>
+        <sf:hidden path="phone"/>
+        <div class="form-row">
+            <button type="submit" class="submit-button">Изменить данные</button>
+        </div>
+    </sf:form>
 
-
-
-<a href="<c:url value="/createCard?id=${patient.id}"/>"> create card </a>
-
-
-<a href="<c:url value="/receptionist"/>"> Back to main page </a>
-
-<br>
+    <div class="menu">
+        <a href="<c:url value="/receptionist/createCard?id=${patient.id}"/>" class="menu-button"> создать карту </a>
+        <a href="<c:url value="/receptionist/mainPage"/>"> Назад на главное меню </a>
+    </div>
 
 </body>
 </html>
