@@ -4,53 +4,69 @@
 <%@ page import="com.academy.hospital.model.entity.Gender" %>
 <html>
 <head>
-    <link rel="stylesheet" href="/css/main.css">
+
     <title>Create new patient </title>
+    <link rel="stylesheet" href="/css/simpleStyle.css">
 </head>
 <body>
 
+<div class="container">
+    <h1>Новый пациент</h1>
 
-<c:url value="/createUpdatePatient" var="createUpdatePatientAction"/>
+    <c:url value="/receptionist/createUpdatePatient" var="createUpdatePatientAction"/>
+    <sf:form method="post" action="${createUpdatePatientAction}" modelAttribute="patient" class="form">
+        <div class="form-row">
+            <sf:label path="surname">Фамилия:</sf:label>
+            <sf:input path="surname" required="required"/>
+        </div>
 
-<sf:form method="post" action="${createUpdatePatientAction}" modelAttribute="patient">
+        <div class="form-row">
+            <sf:label path="name">Имя:</sf:label>
+            <sf:input path="name" required="required"/>
+        </div>
 
-<sf:label path="surname">Surname </sf:label>
-    <sf:input  path="surname" required="required"/> <br>
+        <div class="form-row">
+            <sf:label path="patronymic">Отчество:</sf:label>
+            <sf:input path="patronymic"/>
+        </div>
 
-<sf:label path="name">Name</sf:label>
-    <sf:input path="name"  required="required"/> <br>
+        <div class="form-row">
+            <sf:label path="gender">Пол:</sf:label>
+            <div class="radio-group">
+                <sf:radiobutton path="gender" value="${Gender.MALE}" name="gender" checked="checked"/>
+                <sf:label path="gender" cssClass="light">Мужской</sf:label>
+            </div>
+            <div class="radio-group">
+                <sf:radiobutton path="gender" value="${Gender.FEMALE}" name="gender"/>
+                <sf:label path="gender" cssClass="light">Женский</sf:label>
+            </div>
+        </div>
 
-<sf:label path="patronymic">Patronymic</sf:label>
-    <sf:input path="patronymic"/> <br>
+        <div class="form-row">
+            <sf:label path="dob">Дата рождения:</sf:label>
+            <sf:input type="date" path="dob" required="required"/>
+        </div>
 
-<sf:label path="gender">Gender</sf:label>
-    <sf:radiobutton path="gender" value="${Gender.MALE}" name="gender" checked="checked"/>
-<sf:label path="gender" cssClass="light"> male </sf:label> <br>
-    <sf:radiobutton path="gender" value="${Gender.FEMALE}" name="gender"/>
-<sf:label path="gender" cssClass="light"> female </sf:label> <br>
+        <div class="form-row">
+            <sf:label path="passport">Паспортный номер:</sf:label>
+            <sf:input path="passport"/>
+        </div>
 
-<sf:label path="dob">dob</sf:label>
-    <sf:input type="date" path="dob" required="required"/> <br>
+        <div class="form-row">
+            <sf:label path="phone">Телефон:</sf:label>
+            <sf:input path="phone"/>
+        </div>
 
-<sf:label path="passport">Passport number </sf:label>
-    <sf:input path="passport"/> <br>
+        <sf:hidden path="id"/>
 
-<sf:label path="phone">Phone </sf:label>
-    <sf:input path="phone"/> <br>
+        <div class="form-row">
+            <button type="submit" class="submit-button">OK</button>
+        </div>
+    </sf:form>
 
-    <sf:hidden path="id" /> <br>
-<button type="submit"> ok </button>
-</sf:form>
-
-<br>
-
-
-<br>
-
-
-<a href="<c:url value="/receptionist"/>"> Back to main page </a>
-
-<br>
-
-
-<%@include file="../common/footer.jsp" %>
+    <div class="menu">
+        <a href="<c:url value="/receptionist/mainPage"/>">Назад на главное меню</a>
+    </div>
+</div>
+</body>
+</html>

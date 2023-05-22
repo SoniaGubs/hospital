@@ -2,21 +2,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <link rel="stylesheet" href="/css/main.css">
+
     <title>Receptionist's main page</title>
+    <link rel="stylesheet" href="/css/simpleStyle.css">
+
 </head>
 <body>
 
-Hello, ${staff.name} ${staff.surname} ! <br>
+<div class="container">
+    <div class="form-container">
+
+        <h1>Здравствуйте, ${staff.name} ${staff.surname} !</h1> <br>
+        <p>Вы можете ввести фамилию или фамилию и имя, или же полное фио для лучшего поиска</p>
 
 
-<form action="<c:url value="/searchPatient"/>">
-    <label>Surname: </label>
-    <input name="surname"> <br>
-    <label>Name: </label> <input name="name"> <br>
-    <label>Patronymic: </label> <input name="patronymic"> <br>
-    <button type="submit">Search patient</button>
-</form>
-
-
-<%@include file="../common/footer.jsp" %>
+        <form action="<c:url value="/receptionist/searchPatient"/>">
+            <div class="form-row">
+                <label class="label" for="surname"> Фамилия: </label>
+                <input id="surname" name="surname" type="text" class="input-text" required > <br>
+            </div>
+            <div class="form-row">
+                <label class="label" for="name">Имя: </label>
+                <input id="name" name="name"  type="text" class="input-text"><br>
+            </div>
+            <div class="form-row">
+                <label class="label" for="patronymic">Отчество: </label>
+                <input id="patronymic" name="patronymic" type="text" class="input-text"> <br>
+            </div>
+            <button type="submit" class="submit-button"> Поиск пациента</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -4,26 +4,38 @@
 <html>
 <head>
     <title>Found Patients </title>
+    <link rel="stylesheet" href="/css/simpleStyle.css">
 
 </head>
 <body>
+<div class="container">
+    <h1>Найденные пациенты</h1>
 
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ФИО</th>
+            <th>Дата рождения</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${patients}" var="patient">
+            <tr>
+                <td>
+                    <a href="<c:url value='/receptionist/patient?id=${patient.id}'/>">
+                            ${patient.surname} ${patient.name} ${patient.patronymic}
+                    </a>
+                </td>
+                <td>${patient.dob}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 
-<br>
-<a href="<c:url value="/showCreateUpdatePatient"/>"> Create new patient </a> <br>
-<br>
-
-Found patients:<br>
-
-<c:forEach items="${patients}" var="patient">
-<a href="<c:url value="/patient?id=${patient.id}"/>">  ${patient.surname} ${patient.name} ${patient.patronymic} ${patient.dob}</a>
-<br>
-</c:forEach>
-
-
-<br>
-<a href="<c:url value="/receptionist"/>"> Back to main page </a>
-
-<br>
-
-<%@include file="../common/footer.jsp" %>
+    <div class="menu">
+        <a href="<c:url value='/receptionist/showCreateUpdatePatient'/>" class="menu-button">Зарегистрировать нового пациента</a>
+        <a href="<c:url value='/receptionist/mainPage'/>" class="menu-link">Назад на главное меню</a>
+    </div>
+</div>
+</body>
+</html>

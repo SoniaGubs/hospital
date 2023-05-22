@@ -32,14 +32,14 @@ public class TreatmentServiceImpl implements TreatmentService {
     public void save(TreatmentDto treatmentDto) {
         treatmentDto.setDateOfPrescription(LocalDate.now());
         Treatment treatment = treatmentMapper.toModel(treatmentDto);
-       treatmentRepository.save(treatment) ;
+        treatmentRepository.save(treatment);
     }
 
 
-   @Override
+    @Override
     public List<TreatmentDto> findByCardId(Integer id) {
-       return treatmentMapper.modelsToDto(treatmentRepository.findByCard_Id(id));
-   }
+        return treatmentMapper.modelsToDto(treatmentRepository.findByCard_Id(id));
+    }
 
     @Override
     public List<TreatmentDto> findCompletedTreatment(Integer id) {
@@ -49,6 +49,11 @@ public class TreatmentServiceImpl implements TreatmentService {
     @Override
     public List<TreatmentDto> findNotCompletedTreatment(Integer id) {
         return treatmentMapper.modelsToDto(treatmentRepository.findByCard_IdAndDateOfCompletionIsNull(id));
+    }
+
+    @Override
+    public void deleteTreatment(Integer id) {
+        treatmentRepository.deleteById(id);
     }
 
 }

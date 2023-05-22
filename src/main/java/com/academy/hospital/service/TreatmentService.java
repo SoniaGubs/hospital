@@ -18,5 +18,7 @@ public interface TreatmentService {
 
     List<TreatmentDto> findNotCompletedTreatment(Integer id);
 
+    void deleteTreatment (Integer id);
+
 
 }

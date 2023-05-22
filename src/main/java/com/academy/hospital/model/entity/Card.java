@@ -46,15 +46,17 @@ public class Card {
             joinColumns = {@JoinColumn(name ="card_id")},
             inverseJoinColumns = {@JoinColumn(name = "diagnosis_id")}
     )
-    private List<Diagnosis> startDiagnoses;
+    private List<Diagnosis> diagnoses;
 
-    @Column(name = "description_start_diagnosis")
-    private String descriptionStartDiagnosis;
+    @Column(name = "description_diagnosis")
+    private String descriptionDiagnosis;
 
+/*
     @Column(name = "description_final_diagnosis")
     private String descriptionFinalDiagnosis;
+*/
 
-
+/*
     @ManyToMany
     @JoinTable(
             name = "card_diagnosis",
@@ -63,7 +65,7 @@ public class Card {
     ) private List<Diagnosis> finalDiagnosis;
 
 
-   /* @OneToMany
+   *//* @OneToMany
     @JoinColumn(name = "card_id")
     private List<Treatment> treatments;*/
 

@@ -8,9 +8,6 @@
 </head>
 <body>
 
-<br>
-<a href="<c:url value="/doctor/showMedicalHistory?id=${card.patient.id}"/>"> История болезней </a>
-<br>
 
 ФИО: ${card.patient.surname} ${card.patient.name} ${card.patient.patronymic} <br>
 Дата рождения: ${card.patient.dob}<br>
@@ -18,8 +15,7 @@
 Дата поступления : ${card.dateOfAdmission} <br>
 <br>
 
-Врач: ${card.staff.surname} ${card.staff.name} ${card.staff.patronymic} <a
-        href="<c:url value="/doctor/showSetDoctor?id=${card.id}"/>"> Изменить </a> <br>
+Врач: ${card.staff.surname} ${card.staff.name} ${card.staff.patronymic}  <br>
 <br>
 
 Диагноз:
@@ -30,7 +26,6 @@
 
 Описание: ${card.descriptionDiagnosis} <br>
 
-<a href="<c:url value="/doctor/showAllDiagnoses?id=${card.id}"/>"> Установить диагноз</a>
 
 <br>
 
@@ -47,15 +42,11 @@
             <td> ${treatment.dateOfPrescription} </td>
             <td> ${treatment.treatmentType} </td>
             <td> ${treatment.prescription} </td>
-            <td><a href="<c:url value="/doctor/updateTreatment?id=${treatment.id}"/>"> Изменить </a><br></td>
-            <td><a href="<c:url value="/doctor/deleteTreatment?id=${treatment.id}&cardId=${card.id}"/>"> Удалить </a><br></td>
-
-            <td><a href="<c:url value="/doctor/doTreatment?id=${treatment.id}&cardId=${card.id}"/>"> Выполнить </a><br></td>
+            <td><a href="<c:url value="/nurse/doTreatment?id=${treatment.id}&cardId=${card.id}"/>"> Выполнить </a><br></td>
         </tr>
     </c:forEach>
 </table>
 <br>
-<a href="<c:url value="/doctor/addNewTreatment?cardId=${card.id}"/>">добавить назначение </a>
 
 <br>
 <table>
@@ -80,24 +71,8 @@
 </table>
 
 
-<button onclick="checkDetails()">Выписать</button>
-<script>
-    function checkDetails() {
-        if (${card.staff != null && card.staff != ''}) {
-            if (${not empty card.diagnoses}) {
-                window.location.href = "<c:url value='/doctor/goToDischarge?id=${card.id}'/>";
-            } else {
-                alert("Пожалуйста, укажите диагнозы пациента.");
-            }
-        } else {
-            alert("Пожалуйста, введите информацию о враче.");
-        }
-    }
-</script>
 <br>
-
-<br>
-<a href="<c:url value="/doctor/doctorMainPage"/>"> Назад на главное меню </a>
+<a href="<c:url value="/nurse/nurseMainPage"/>"> Назад на главное меню </a>
 
 
 </body>

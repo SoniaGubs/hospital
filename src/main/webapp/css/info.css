@@ -1,0 +1,65 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.patient-info {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.info-label {
+    font-weight: bold;
+}
+
+.patient-form {
+    margin-bottom: 20px;
+}
+
+.button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+}
+
+.links a {
+    margin: 0 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}

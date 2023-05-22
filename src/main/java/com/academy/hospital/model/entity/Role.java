@@ -1,7 +1,7 @@
 package com.academy.hospital.model.entity;
 
 public enum Role {
-    DOCTOR,
-    NURSE,
-    RECEPTIONIST
+    ROLE_DOCTOR,
+    ROLE_NURSE,
+    ROLE_RECEPTIONIST
 }

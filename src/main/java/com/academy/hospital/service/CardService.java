@@ -2,23 +2,26 @@ package com.academy.hospital.service;
 
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.CardSetDiagnosesDto;
+import com.academy.hospital.dto.PatientDto;
 import com.academy.hospital.model.entity.Card;
 import com.academy.hospital.model.entity.Diagnosis;
 
 import java.util.List;
 
 public interface CardService {
-    List<CardDto> findAll();
+    List<CardDto> findAllCardByPatient(Integer patientId);
 
     CardDto findCard(Integer id);
 
     List<CardDto> findSick();
 
-   // CardDto setDiagnosis(List<Diagnosis> diagnoses, Integer id);
-
     CardSetDiagnosesDto createCardSetDiagnosesDto (Integer id);
 
-   // CardDto updateDiagnosis (CardSetDiagnosesDto cardSetDiagnosesDto);
     CardDto updateDiagnosis (CardSetDiagnosesDto cardSetDiagnosesDto);
-    void save (CardDto cardDto);
+    CardDto save (PatientDto patientDto);
+
+    void setDoctor (CardDto cardDto, Integer doctorId);
+
+    void discharge(Integer cardId);
+
 }

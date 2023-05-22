@@ -11,7 +11,7 @@ import java.util.List;
 public class CardSetDiagnosesDto {
 
     private Integer id;
-    private List<DiagnosisDto> startDiagnoses;
-    private String descriptionStartDiagnosis;
+    private List<DiagnosisDto> diagnoses;
+    private String descriptionDiagnosis;
 
 }

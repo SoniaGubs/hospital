@@ -4,19 +4,17 @@
 <html>
 <head>
 
-    <title>Doctor's main page</title>
+    <title>Nurse's main page</title>
 </head>
 <body>
 
-Здравствуйте, доктор   ${staff.name} ${staff.surname} ! <br>
-
+Здравствуйте,  ${staff.name} ${staff.surname} ! <br>
 
 Список пациентов: <br>
 
 <c:forEach items="${sicks}" var="card">
-<a href="<c:url value="/doctor/card?id=${card.id}"/>">  ${card.patient.surname} ${card.patient.name} ${card.patient.patronymic} </a> <br>
+<a href="<c:url value="/nurse/card?id=${card.id}"/>">  ${card.patient.surname} ${card.patient.name} ${card.patient.patronymic} </a> <br>
 </c:forEach>
-
 
 
 <%@include file="../common/footer.jsp" %>
