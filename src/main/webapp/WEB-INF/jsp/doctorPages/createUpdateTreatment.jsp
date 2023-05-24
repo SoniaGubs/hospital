@@ -6,32 +6,42 @@
 <head>
 
     <title>Create Treatment </title>
-    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/doctorStyle.css">
 </head>
 <body>
+<div class="container">
+    <h1>Назначение</h1>
 
-<c:url value="/doctor/createTreatment" var="createTreatmentAction"/>
-<sf:form method="post" action="${createTreatmentAction}" modelAttribute="treatment">
+    <c:url value="/doctor/createTreatment" var="createTreatmentAction"/>
+    <sf:form method="post" action="${createTreatmentAction}" modelAttribute="treatment">
 
-<sf:label path="treatmentType">Тип назначения </sf:label>
-    <sf:radiobutton path="treatmentType" value="${TreatmentType.DRUG}" name="treatmentType" checked="checked"/>
-<sf:label path="treatmentType" cssClass="light"> drug </sf:label> <br>
-    <sf:radiobutton path="treatmentType" value="${TreatmentType.PROCEDURE}" name="treatmentType"/>
-<sf:label path="treatmentType" cssClass="light"> procedure </sf:label> <br>
-    <sf:radiobutton path="treatmentType" value="${TreatmentType.OPERATION}" name="treatmentType"/>
-<sf:label path="treatmentType" cssClass="light"> operation </sf:label> <br>
+        <div class="list">
+            <h2>Тип назначения</h2>
 
+            <label> <sf:radiobutton path="treatmentType" value="${TreatmentType.DRUG}" name="treatmentType"
+                                    checked="checked"/>
+                Лекарство </label>
 
-<sf:label path="prescription">назначение </sf:label>
-    <sf:input path="prescription" required="required"/> <br>
+            <label> <sf:radiobutton path="treatmentType" value="${TreatmentType.PROCEDURE}" name="treatmentType"/>
+                Процедура </label>
 
-    <sf:hidden path="card.id"/> <br>
-    <sf:hidden path="id" /> <br>
-
-<input type="submit" value="подтвердить"/>
-</sf:form>
+            <label> <sf:radiobutton path="treatmentType" value="${TreatmentType.OPERATION}" name="treatmentType"/>
+                Операция </label>
 
 
+            <h2>назначение </h2>
+            <sf:textarea path="prescription" required="required" rows="10"/> <br>
+
+            <sf:hidden path="card.id"/> <br>
+            <sf:hidden path="id"/> <br>
+        </div>
+
+        <div class="button">
+            <button type="submit" > Подтвердить </button>
+        </div>
+    </sf:form>
+
+</div>
 
 <br>
 

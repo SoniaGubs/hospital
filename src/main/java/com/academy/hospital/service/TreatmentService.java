@@ -20,5 +20,7 @@ public interface TreatmentService {
 
     void deleteTreatment (Integer id);
 
+    void doTreatment(Integer id, Integer userId);
+
 
 }

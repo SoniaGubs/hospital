@@ -3,10 +3,13 @@ package com.academy.hospital.service.impl;
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.TreatmentDto;
 import com.academy.hospital.mapper.CardMapper;
+import com.academy.hospital.mapper.StaffMapper;
 import com.academy.hospital.mapper.TreatmentMapper;
 import com.academy.hospital.model.entity.Card;
+import com.academy.hospital.model.entity.Staff;
 import com.academy.hospital.model.entity.Treatment;
 import com.academy.hospital.model.repository.CardRepository;
+import com.academy.hospital.model.repository.StaffRepository;
 import com.academy.hospital.model.repository.TreatmentRepository;
 import com.academy.hospital.service.TreatmentService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,8 @@ public class TreatmentServiceImpl implements TreatmentService {
     private final TreatmentRepository treatmentRepository;
 
     private final TreatmentMapper treatmentMapper;
+    private final StaffRepository staffRepository;
+    private final StaffMapper staffMapper;
 
     @Override
     public TreatmentDto findById(Integer id) {
@@ -54,6 +59,15 @@ public class TreatmentServiceImpl implements TreatmentService {
     @Override
     public void deleteTreatment(Integer id) {
         treatmentRepository.deleteById(id);
+    }
+
+    @Override
+    public void doTreatment(Integer id, Integer userId) {
+        Treatment treatment = treatmentRepository.getReferenceById(id);
+        Staff staff = staffRepository.getReferenceById(userId);
+        treatment.setDateOfCompletion(LocalDate.now());
+        treatment.setStaff(staff);
+        treatmentRepository.save(treatment);
     }
 
 }

@@ -22,4 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return user;
     }
+
+ /*   public Integer findUserId (UserDetails userDetails){
+        return userRepository.findByUsername(userDetails.getUsername()).getId();
+    }*/
+
 }

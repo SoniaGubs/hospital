@@ -2,12 +2,19 @@ package com.academy.hospital.controller;
 
 import com.academy.hospital.dto.*;
 import com.academy.hospital.model.entity.Role;
+import com.academy.hospital.model.repository.UserRepository;
 import com.academy.hospital.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,23 +25,25 @@ public class DoctorController {
     private final CardService cardService;
     private final DiagnosisService diagnosisService;
     private final TreatmentService treatmentService;
-    private final PatientService patientService;
+
     private final StaffService staffService;
+    private final UserRepository userRepository;
 
 
     @GetMapping("/doctor/doctorMainPage")
     public String showMainPageDoctor(Model model) {
-        List <CardDto> cards = cardService.findSick();
+        List<CardDto> cards = cardService.findSick();
         model.addAttribute("sicks", cards);
         return "doctorPages/doctorMainPage";
 
     }
 
     @GetMapping("/doctor/card")
-    public String findCard(@RequestParam(value = "id") Integer cardId, Model model) {
+    public String getCards(@RequestParam(value = "id") Integer cardId, Model model) {
         CardDto card = cardService.findCard(cardId);
         List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(cardId);
         List<TreatmentDto> treatmentsNotCompl = treatmentService.findNotCompletedTreatment(cardId);
+
         model.addAttribute("card", card);
         model.addAttribute("treatmentsCompl", treatmentsCompl);
         model.addAttribute("treatmentsNotCompl", treatmentsNotCompl);
@@ -46,7 +55,7 @@ public class DoctorController {
     /*-------------------------*/
 
     @GetMapping("/doctor/showAllDiagnoses")
-    public String getAllDiagnoses(@RequestParam(value = "id") Integer id, Model model) {
+    public String getAllDiagnoses(@RequestParam Integer id, Model model) {
         CardSetDiagnosesDto cardSetDiagnosesDto = cardService.createCardSetDiagnosesDto(id);
         List<DiagnosisDto> diagnosisDtos = diagnosisService.findAll();
         model.addAttribute("cardSetDiagnosesDto", cardSetDiagnosesDto);
@@ -62,11 +71,11 @@ public class DoctorController {
     }
 
     /*------------------------------*/
-    // Set, update, delete treatments
+    // Set, update, delete, do treatment
     /*------------------------------*/
 
     @GetMapping("/doctor/addNewTreatment")
-    public String addNewTreatment(@RequestParam(value = "cardId") Integer id, Model model) {
+    public String createNewTreatment(@RequestParam(value = "cardId") Integer id, Model model) {
         TreatmentDto treatmentNew = new TreatmentDto();
         treatmentNew.setCard(cardService.findCard(id));
         model.addAttribute("treatment", treatmentNew);
@@ -81,7 +90,7 @@ public class DoctorController {
     }
 
     @PostMapping("/doctor/createTreatment")
-    public String createTreatment(@ModelAttribute TreatmentDto treatment, Model model) {
+    public String saveTreatment(@ModelAttribute TreatmentDto treatment) {
         treatmentService.save(treatment);
         Integer cardId = treatment.getCard().getId();
         return "redirect:/doctor/card?id=" + cardId;
@@ -93,20 +102,26 @@ public class DoctorController {
         return "redirect:/doctor/card?id=" + cardId;
     }
 
+    @GetMapping("/doctor/doTreatment")
+    public String doTreatment(@RequestParam Integer id, @RequestParam Integer cardId, @AuthenticationPrincipal UserDetails userDetails) {
+        Integer userId = userRepository.findByUsername(userDetails.getUsername()).getId();
+        treatmentService.doTreatment(id, userId);
+        return "redirect:/doctor/card?id=" + cardId;
+    }
 
     /*------------------------------*/
     // medical history
     /*------------------------------*/
 
     @GetMapping("/doctor/showMedicalHistory")
-    public String showMedicalHistory (@RequestParam Integer id, Model model) {
+    public String showMedicalHistory(@RequestParam Integer id, Model model) {
         List<CardDto> card = cardService.findAllCardByPatient(id);
         model.addAttribute("allPatientsCards", card);
         return "doctorPages/medicalHistory";
     }
 
     @GetMapping("/doctor/showDetailsMedicalHistory/{id}")
-    public String getTreatmentsDetail (@PathVariable Integer id, Model model) {
+    public String getTreatmentsDetail(@PathVariable Integer id, Model model) {
         List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(id);
         model.addAttribute("treatmentsCompl", treatmentsCompl);
         return "doctorPages/detailsMedicalHistory";
@@ -134,32 +149,12 @@ public class DoctorController {
     }
 
 
-
-    /*------------------------------*/
-    // Do treatment
-    /*------------------------------*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /*------------------------------*/
     // Discharge
     /*------------------------------*/
 
     @GetMapping("/doctor/goToDischarge")
-    public String goToDischarge(@RequestParam Integer id, Model model) {
+    public String showDischargePage(@RequestParam Integer id, Model model) {
         CardDto cardDto = cardService.findCard(id);
         cardDto.setDateOfDischarge(LocalDate.now());
         List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(id);
@@ -173,7 +168,6 @@ public class DoctorController {
         cardService.discharge(id);
         return "redirect:/doctor/doctorMainPage";
     }
-
 
 
 

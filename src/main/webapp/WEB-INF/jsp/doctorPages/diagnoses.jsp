@@ -5,30 +5,35 @@
 <html>
 <head>
     <title>List diagnoses</title>
-    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/doctorStyle.css">
 </head>
 <body>
 
-Выберите диагнозы:
+<div class="container">
+    <h1>Выберите диагнозы:</h1>
+    <br>
 
-<br>
+    <c:url value="/doctor/setDiagnosis" var="setDiagnosisAction"/>
+    <sf:form method="post" action="${setDiagnosisAction}" modelAttribute="cardSetDiagnosesDto">
 
-<c:url value="/doctor/setDiagnosis" var="setDiagnosisAction"/>
+        <div class="list">
+            <h2>Диагнозы:</h2>
 
-<sf:form method="post" action="${setDiagnosisAction}" modelAttribute="cardSetDiagnosesDto">
+            <c:forEach items="${allDiagnoses}" var="diagnosis">
+                <label> <sf:checkbox path="diagnoses" value="${diagnosis}"/>
+                        ${diagnosis.code} ${diagnosis.diagnosisName} </label>
+            </c:forEach>
 
-    <c:forEach items="${allDiagnoses}" var="diagnosis">
-        <label> <sf:checkbox path="diagnoses" value="${diagnosis}"/>
-                ${diagnosis.code} ${diagnosis.diagnosisName} </label> <br>
-    </c:forEach>
+            <h2>Дополнительная информация:</h2>
+            <sf:textarea path="descriptionDiagnosis" rows="10"/> <br>
+        </div>
 
-    <label> Description </label><br>
-    <sf:input path="descriptionDiagnosis"/> <br>
-    <sf:hidden path="id"/>
-    <input type="reset">
-    <input type="submit" value="Подтвердить">
-
-</sf:form>
+        <div class="button">
+            <sf:hidden path="id"/>
+            <button type="submit"> Подтвердить</button>
+        </div>
+    </sf:form>
+</div>
 
 
 </body>
