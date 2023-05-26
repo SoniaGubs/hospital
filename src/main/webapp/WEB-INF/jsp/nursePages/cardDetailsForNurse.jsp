@@ -51,7 +51,7 @@
             <c:forEach items="${treatmentsNotCompl}" var="treatment">
                 <tr>
                     <td>${treatment.dateOfPrescription}</td>
-                    <td>${treatment.treatmentType}</td>
+                    <td>${treatment.treatmentType.label}</td>
                     <td>${treatment.prescription}</td>
                     <td><c:if test="${treatment.treatmentType == 'DRUG' || treatment.treatmentType == 'PROCEDURE'}">
                         <a href="<c:url value="/nurse/doTreatment?id=${treatment.id}&cardId=${card.id}"/>">
@@ -76,7 +76,7 @@
             <c:forEach items="${treatmentsCompl}" var="treatment">
                 <tr>
                     <td>${treatment.dateOfPrescription}</td>
-                    <td>${treatment.treatmentType}</td>
+                    <td>${treatment.treatmentType.label}</td>
                     <td>${treatment.prescription}</td>
                     <td>${treatment.dateOfCompletion}</td>
                     <td>${treatment.staff.surname} ${treatment.staff.name} ${treatment.staff.patronymic}</td>

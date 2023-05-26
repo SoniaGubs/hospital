@@ -2,12 +2,11 @@ package com.academy.hospital.service.impl;
 
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.TreatmentDto;
+import com.academy.hospital.exceptions.TreatmentException;
 import com.academy.hospital.mapper.CardMapper;
 import com.academy.hospital.mapper.StaffMapper;
 import com.academy.hospital.mapper.TreatmentMapper;
-import com.academy.hospital.model.entity.Card;
-import com.academy.hospital.model.entity.Staff;
-import com.academy.hospital.model.entity.Treatment;
+import com.academy.hospital.model.entity.*;
 import com.academy.hospital.model.repository.CardRepository;
 import com.academy.hospital.model.repository.StaffRepository;
 import com.academy.hospital.model.repository.TreatmentRepository;
@@ -62,9 +61,12 @@ public class TreatmentServiceImpl implements TreatmentService {
     }
 
     @Override
-    public void doTreatment(Integer id, Integer userId) {
+    public void doTreatment(Integer id, Integer userId) throws TreatmentException {
         Treatment treatment = treatmentRepository.getReferenceById(id);
         Staff staff = staffRepository.getReferenceById(userId);
+        if ((staff.getUser().getRoles().get(0) == Role.ROLE_NURSE) && (treatment.getTreatmentType() == TreatmentType.OPERATION)) {
+            throw new TreatmentException("Nurse can not do operations");
+        }
         treatment.setDateOfCompletion(LocalDate.now());
         treatment.setStaff(staff);
         treatmentRepository.save(treatment);

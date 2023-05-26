@@ -24,21 +24,25 @@ public class ReceptionistController {
 
     @GetMapping("/receptionist/searchPatient")
     public String searchPatient(@RequestParam String name, @RequestParam String surname, @RequestParam String patronymic, Model model) {
-        List<PatientDto> patients = patientService.findByParameters(surname, name, patronymic);
+        List<PatientDto> patients = patientService.findByParametersAndOrderByName(surname, name, patronymic);
         model.addAttribute("patients", patients);
         return "receptionistPages/findPatient";
     }
 
-    @RequestMapping ("/receptionist/showCreateUpdatePatient")
-    public String showFormPatient(@ModelAttribute("patient") PatientDto updatePatient, Model model) {
-        if (updatePatient != null) {
-            model.addAttribute("patient", updatePatient);
-        } else {
-            PatientDto createPatient = new PatientDto();
-            model.addAttribute("patient", createPatient);
-        }
+
+    @GetMapping("/receptionist/showCreateUpdatePatient")
+    public String showFormPatient(Model model) {
+        PatientDto createPatient = new PatientDto();
+        model.addAttribute("patient", createPatient);
         return "receptionistPages/createUpdatePatient";
     }
+
+    @PostMapping("/receptionist/showCreateUpdatePatient")
+    public String showFormPatient(@ModelAttribute("patient") PatientDto updatePatient, Model model) {
+        model.addAttribute("patient", updatePatient);
+        return "receptionistPages/createUpdatePatient";
+    }
+
 
     @PostMapping("/receptionist/createUpdatePatient")
     public String createUpdatePatient(@ModelAttribute("patient") PatientDto createPatient, Model model) {

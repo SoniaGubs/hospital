@@ -70,7 +70,8 @@ public class CardServiceImpl implements CardService {
         CardDto cardDto = new CardDto();
         cardDto.setDateOfAdmission(LocalDate.now());
         cardDto.setPatient(patientDto);
-        return cardMapper.toDto(cardRepository.save(cardMapper.toModel(cardDto)));
+        cardRepository.save(cardMapper.toModel(cardDto));
+        return cardDto;
     }
 
     @Override

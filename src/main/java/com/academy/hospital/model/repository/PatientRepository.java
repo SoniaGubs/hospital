@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
-    List<Patient> findBySurnameAndNameAndPatronymicOrderBySurnameAsc(String surname, String name, String patronymic);
-    List<Patient> findBySurnameAndNameOrderBySurnameAsc(String surname, String name);
-    List<Patient> findBySurnameOrderBySurnameAsc(String surname);
+    List<Patient> findBySurnameAndNameAndPatronymicOrderByNameAsc(String surname, String name, String patronymic);
+    List<Patient> findBySurnameAndNameOrderByNameAsc(String surname, String name);
+    List<Patient> findBySurnameOrderByNameAsc(String surname);
 
 }

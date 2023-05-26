@@ -1,9 +1,11 @@
 package com.academy.hospital.controller;
 
 import com.academy.hospital.dto.*;
+import com.academy.hospital.exceptions.TreatmentException;
 import com.academy.hospital.model.entity.Role;
 import com.academy.hospital.model.repository.UserRepository;
 import com.academy.hospital.service.*;
+import com.academy.hospital.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +29,8 @@ public class DoctorController {
     private final TreatmentService treatmentService;
 
     private final StaffService staffService;
-    private final UserRepository userRepository;
+    //private final UserRepository userRepository;
+    private final UserDetailsServiceImpl userDetailsService;
 
 
     @GetMapping("/doctor/doctorMainPage")
@@ -102,12 +105,20 @@ public class DoctorController {
         return "redirect:/doctor/card?id=" + cardId;
     }
 
-    @GetMapping("/doctor/doTreatment")
+/*    @GetMapping("/doctor/doTreatment")
     public String doTreatment(@RequestParam Integer id, @RequestParam Integer cardId, @AuthenticationPrincipal UserDetails userDetails) {
         Integer userId = userRepository.findByUsername(userDetails.getUsername()).getId();
         treatmentService.doTreatment(id, userId);
         return "redirect:/doctor/card?id=" + cardId;
+    }*/
+    @GetMapping("/doctor/doTreatment")
+    public String doTreatment(@RequestParam Integer id, @RequestParam Integer cardId, @AuthenticationPrincipal UserDetails userDetails) throws TreatmentException {
+        Integer userId = userDetailsService.findUserId(userDetails);
+        treatmentService.doTreatment(id, userId);
+        return "redirect:/doctor/card?id=" + cardId;
     }
+
+
 
     /*------------------------------*/
     // medical history
@@ -120,8 +131,8 @@ public class DoctorController {
         return "doctorPages/medicalHistory";
     }
 
-    @GetMapping("/doctor/showDetailsMedicalHistory/{id}")
-    public String getTreatmentsDetail(@PathVariable Integer id, Model model) {
+    @GetMapping("/doctor/showDetailsMedicalHistory")
+    public String getTreatmentsDetail(@RequestParam Integer id, Model model) {
         List<TreatmentDto> treatmentsCompl = treatmentService.findCompletedTreatment(id);
         model.addAttribute("treatmentsCompl", treatmentsCompl);
         return "doctorPages/detailsMedicalHistory";

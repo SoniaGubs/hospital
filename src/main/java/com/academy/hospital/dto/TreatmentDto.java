@@ -1,7 +1,5 @@
 package com.academy.hospital.dto;
 
-
-import com.academy.hospital.model.entity.Staff;
 import com.academy.hospital.model.entity.TreatmentType;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;

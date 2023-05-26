@@ -34,11 +34,10 @@
                     </td>
                     <td> ${card.descriptionDiagnosis} </td>
                     <td>  ${card.staff.surname} ${card.staff.name} ${card.staff.patronymic} </td>
-                    <td><a href="<c:url value="/doctor/showDetailsMedicalHistory/${card.id}"/>"> выполненное
+                    <td><a href="<c:url value="/doctor/showDetailsMedicalHistory?id=${card.id}"/>"> выполненное
                         лечение </a><br></td>
                 </tr>
             </c:forEach>
-
 
         </table>
     </div>

@@ -2,6 +2,7 @@ package com.academy.hospital.controller;
 
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.TreatmentDto;
+import com.academy.hospital.exceptions.TreatmentException;
 import com.academy.hospital.model.repository.UserRepository;
 import com.academy.hospital.service.CardService;
 import com.academy.hospital.service.TreatmentService;
@@ -32,7 +33,6 @@ public class NurseController {
         return "nursePages/nurseMainPage";
     }
 
-
     @GetMapping("/nurse/card")
     public String findCard(@RequestParam(value = "id") Integer cardId, Model model) {
         CardDto card = cardService.findCard(cardId);
@@ -45,7 +45,7 @@ public class NurseController {
     }
 
     @GetMapping("/nurse/doTreatment")
-    public String doTreatment(@RequestParam Integer id, @RequestParam Integer cardId, @AuthenticationPrincipal UserDetails userDetails) {
+    public String doTreatment(@RequestParam Integer id, @RequestParam Integer cardId, @AuthenticationPrincipal UserDetails userDetails) throws TreatmentException {
         Integer userId = userRepository.findByUsername(userDetails.getUsername()).getId();
         treatmentService.doTreatment(id, userId);
         return "redirect:/nurse/card?id=" + cardId;
