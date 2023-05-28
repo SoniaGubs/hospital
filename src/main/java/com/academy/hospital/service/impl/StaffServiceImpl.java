@@ -28,5 +28,10 @@ public class StaffServiceImpl implements StaffService {
         return staffMapper.toDto(staffRepository.getReferenceById(id));
     }
 
+    @Override
+    public StaffDto findByUserId(Integer userId) {
+        return staffMapper.toDto(staffRepository.findByUser_Id(userId));
+    }
+
 
 }

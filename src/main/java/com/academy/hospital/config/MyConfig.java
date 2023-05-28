@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @RequiredArgsConstructor
@@ -36,19 +37,21 @@ public class MyConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new MySimpleUrlAuthenticationSuccessHandler();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .formLogin()
+                .successHandler(myAuthenticationSuccessHandler())
                 .and()
                 .authorizeRequests()
                 .antMatchers("/doctor/**").hasAnyRole("DOCTOR")
-              //  .antMatchers( "/**").hasAnyRole("DOCTOR")
                 .antMatchers( "/nurse/**").hasAnyRole("NURSE")
-               // .antMatchers(HttpMethod.POST, "/nurse/**").hasAnyRole("DOCTOR")
                 .antMatchers("/receptionist/**").hasAnyRole("RECEPTIONIST");
-               // .antMatchers(HttpMethod.POST, "/receptionist/**").hasAnyRole("RECEPTIONIST");
-
 
      }
 }

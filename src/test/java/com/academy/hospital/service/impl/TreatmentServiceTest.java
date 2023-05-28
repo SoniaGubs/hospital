@@ -1,32 +1,40 @@
 package com.academy.hospital.service.impl;
 
-import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.TreatmentDto;
 import com.academy.hospital.exceptions.TreatmentException;
-import com.academy.hospital.mapper.CardMapper;
-import com.academy.hospital.mapper.StaffMapper;
+import com.academy.hospital.mapper.PatientMapper;
 import com.academy.hospital.mapper.TreatmentMapper;
-import com.academy.hospital.model.entity.*;
-import com.academy.hospital.model.repository.CardRepository;
-import com.academy.hospital.model.repository.StaffRepository;
+import com.academy.hospital.model.entity.Role;
+import com.academy.hospital.model.entity.Staff;
+import com.academy.hospital.model.entity.Treatment;
+import com.academy.hospital.model.entity.TreatmentType;
+import com.academy.hospital.model.repository.PatientRepository;
 import com.academy.hospital.model.repository.TreatmentRepository;
 import com.academy.hospital.service.TreatmentService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.academy.hospital.service.impl.PatientServiceImpl;
+import com.academy.hospital.service.impl.TreatmentServiceImpl;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.List;
+@ExtendWith(MockitoExtension.class)
+public class TreatmentServiceTest {
 
-@Service
-@RequiredArgsConstructor
-public class TreatmentServiceImpl implements TreatmentService {
+    @InjectMocks
+    private TreatmentService treatmentService;
 
-    private final TreatmentRepository treatmentRepository;
+    @Mock
+    private TreatmentMapper treatmentMapper;
 
-    private final TreatmentMapper treatmentMapper;
-    private final StaffRepository staffRepository;
-    private final StaffMapper staffMapper;
+    @Mock
+    private TreatmentRepository treatmentRepository;
 
+
+
+/*
     @Override
     public TreatmentDto findById(Integer id) {
         return treatmentMapper.toDto(treatmentRepository.getReferenceById(id));
@@ -62,17 +70,16 @@ public class TreatmentServiceImpl implements TreatmentService {
 
     @Override
     public void doTreatment(Integer id, Integer userId) throws TreatmentException {
-        //TreatmentDto treatmentDto = findById(id);
-
         Treatment treatment = treatmentRepository.getReferenceById(id);
-
-        Staff staff = staffRepository.findByUser_Id(userId);
+        Staff staff = staffRepository.getReferenceById(userId);
         if ((staff.getUser().getRoles().get(0) == Role.ROLE_NURSE) && (treatment.getTreatmentType() == TreatmentType.OPERATION)) {
             throw new TreatmentException("Nurse can not do operations");
         }
         treatment.setDateOfCompletion(LocalDate.now());
         treatment.setStaff(staff);
         treatmentRepository.save(treatment);
-    }
+    }*/
+
+
 
 }

@@ -5,16 +5,36 @@
 <head>
 
     <title>Nurse's main page</title>
+    <link rel="stylesheet" href="/css/doctorStyle.css">
 </head>
 <body>
 
-Здравствуйте,  ${staff.name} ${staff.surname} ! <br>
+<div class="container">
+    <h1> Здравствуйте, <br>
+     ${staff.surname} ${staff.name} ${staff.patronymic}  </h1>
+    <br>
+    <h2>Список пациентов:</h2>
 
-Список пациентов: <br>
+    <table class="table">
+        <tr>
+            <th>ФИО</th>
+            <th>Дата поступления:</th>
+            <th>Лечащий врач:</th>
+        </tr>
 
-<c:forEach items="${sicks}" var="card">
-<a href="<c:url value="/nurse/card?id=${card.id}"/>">  ${card.patient.surname} ${card.patient.name} ${card.patient.patronymic} </a> <br>
-</c:forEach>
+        <c:forEach items="${sicks}" var="card">
+            <tr>
+                <td>
+                    <a href="<c:url value="/nurse/card?id=${card.id}"/>">${card.patient.surname} ${card.patient.name} ${card.patient.patronymic}</a>
+                </td>
+                <td> ${card.dateOfAdmission} </td>
+                <td> ${card.staff.surname} </td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
 
 
-<%@include file="../common/footer.jsp" %>
+</body>
+</html>
+

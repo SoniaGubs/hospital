@@ -13,7 +13,7 @@ public class StaffDto {
     private String name;
     private String surname;
     private String patronymic;
-    private User user;
+   // private User user;
 
 /*
     @Enumerated(EnumType.STRING)

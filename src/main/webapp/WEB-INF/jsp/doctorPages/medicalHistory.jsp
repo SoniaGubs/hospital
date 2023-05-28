@@ -5,42 +5,43 @@
 <html>
 <head>
     <title> Medical history </title>
+    <link rel="stylesheet" href="/css/doctorStyle.css">
+
 </head>
 <body>
+<div class="container">
+    <div class="table">
+        <h1> История болезней</h1>>
+        <table>
 
+            <tr>
+                <th> Дата поступления</th>
+                <th> Дата выписки</th>
+                <th> Заключительный диагноз</th>
+                <th> Описание диагноза</th>
+                <th> Лечащий врач</th>
+                <th> Выполненное лечение</th>
+            </tr>
 
-<table>
-    <caption> История болезней </caption>
-    <tr>
-        <th> Дата поступления </th>
-        <th> Дата выписки </th>
-        <th> Заключительный диагноз </th>
-        <th> Описание диагноза </th>
-        <th> Лечащий врач </th>
-        <th> Выполненное лечение</th>
-    </tr>
+            <c:forEach items="${allPatientsCards}" var="card">
+                <tr>
+                    <td> ${card.dateOfAdmission} </td>
+                    <td> ${card.dateOfDischarge} </td>
+                    <td>
+                        <c:forEach items="${card.diagnoses}" var="diagnosis">
+                            ${diagnosis.code}  ${diagnosis.diagnosisName} <br>
+                        </c:forEach>
+                    </td>
+                    <td> ${card.descriptionDiagnosis} </td>
+                    <td>  ${card.staff.surname} ${card.staff.name} ${card.staff.patronymic} </td>
+                    <td><a href="<c:url value="/doctor/showDetailsMedicalHistory?id=${card.id}"/>"> выполненное
+                        лечение </a><br></td>
+                </tr>
+            </c:forEach>
 
-    <c:forEach items="${allPatientsCards}" var="card">
-    <tr>
-        <td> ${card.dateOfAdmission} </td>
-        <td> ${card.dateOfDischarge} </td>
-        <td>
-        <c:forEach items="${card.diagnoses}" var="diagnosis">
-            ${diagnosis.code}  ${diagnosis.diagnosisName} <br>
-        </c:forEach>
-        </td>
-        <td> ${card.descriptionDiagnosis} </td>
-        <td>  ${card.staff.surname} ${card.staff.name} ${card.staff.patronymic} </td>
-        <td> <a href="<c:url value="/doctor/showDetailsMedicalHistory/${card.id}"/>"> выполненное лечение </a><br> </td>
-    </tr>
-        </c:forEach>
-
-
-</table>
-
-
-<br>
-
+        </table>
+    </div>
+</div>
 
 
 </body>

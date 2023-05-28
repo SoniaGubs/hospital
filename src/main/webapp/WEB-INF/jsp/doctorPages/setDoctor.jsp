@@ -5,29 +5,30 @@
 <html>
 <head>
     <title>Doctors</title>
+    <link rel="stylesheet" href="/css/doctorStyle.css">
 </head>
 <body>
 
-<h2>Список врачей</h2>
+<div class="container">
+    <h2>Список врачей</h2>
+    <div class="list">
+    <form action="<c:url value="/doctor/setDoctor"/>">
+
+            <select name="staffId" size="20">
+                <c:forEach items="${doctors}" var="doctor">
+                    <option value="${doctor.id}"> ${doctor.surname} ${doctor.name} ${doctor.patronymic} </option>
+                </c:forEach>
+            </select>
+
+            <div class="button">
+                <input type="hidden" name="cardId" value="${cardId}">
+                <button type="submit" > Подтвердить </button>
+            </div>
 
 
-
-<form action="<c:url value="/doctor/setDoctor"/>">
-
-
-    <select name="staffId" size="20">
-        <c:forEach items="${doctors}" var="doctor">
-            <option value="${doctor.id}">${doctor.surname} ${doctor.name} ${doctor.patronymic}</option>
-        </c:forEach>
-    </select><br><br>
-    <input type="hidden"  name="cardId" value="${cardId}">
-    <input type="submit" value="ок">
-</form>
-
-<br>
-
-
-
+    </form>
+    </div>
+</div>
 
 </body>
 </html>

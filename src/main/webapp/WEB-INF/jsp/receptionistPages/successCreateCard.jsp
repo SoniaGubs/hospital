@@ -28,8 +28,6 @@
         </div>
     </div>
 
-
-
     <div class="menu">
         <a href="<c:url value="/receptionist/mainPage"/>"> Назад на главное меню </a>
     </div>

@@ -22,7 +22,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
     @Override
     public List<DiagnosisDto> findAll() {
-        return diagnosisMapper.modelsToDto(diagnosisRepository.findAll());
+        return diagnosisMapper.modelsToDto(diagnosisRepository.findAll(Sort.by(Sort.Direction.ASC, "code")));
     }
 
 

@@ -2,9 +2,14 @@ package com.academy.hospital.controller;
 
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.PatientDto;
+import com.academy.hospital.dto.StaffDto;
 import com.academy.hospital.service.CardService;
 import com.academy.hospital.service.PatientService;
+import com.academy.hospital.service.StaffService;
+import com.academy.hospital.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,29 +21,38 @@ import java.util.List;
 public class ReceptionistController {
     private final PatientService patientService;
     private final CardService cardService;
+    private final StaffService staffService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @GetMapping("/receptionist/mainPage")
-    public String showMainPageReceptionist() {
+    public String showMainPageReceptionist(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Integer userId = userDetailsService.findUserId(userDetails);
+        StaffDto staffDto = staffService.findByUserId(userId);
+        model.addAttribute("staff", staffDto);
         return "receptionistPages/receptionistMainPage";
     }
 
     @GetMapping("/receptionist/searchPatient")
     public String searchPatient(@RequestParam String name, @RequestParam String surname, @RequestParam String patronymic, Model model) {
-        List<PatientDto> patients = patientService.findByParameters(surname, name, patronymic);
+        List<PatientDto> patients = patientService.findByParametersAndOrderByName(surname, name, patronymic);
         model.addAttribute("patients", patients);
         return "receptionistPages/findPatient";
     }
 
-    @RequestMapping ("/receptionist/showCreateUpdatePatient")
-    public String showFormPatient(@ModelAttribute("patient") PatientDto updatePatient, Model model) {
-        if (updatePatient != null) {
-            model.addAttribute("patient", updatePatient);
-        } else {
-            PatientDto createPatient = new PatientDto();
-            model.addAttribute("patient", createPatient);
-        }
+
+    @GetMapping("/receptionist/showCreateUpdatePatient")
+    public String showFormPatient(Model model) {
+        PatientDto createPatient = new PatientDto();
+        model.addAttribute("patient", createPatient);
         return "receptionistPages/createUpdatePatient";
     }
+
+    @PostMapping("/receptionist/showCreateUpdatePatient")
+    public String showFormPatient(@ModelAttribute("patient") PatientDto updatePatient, Model model) {
+        model.addAttribute("patient", updatePatient);
+        return "receptionistPages/createUpdatePatient";
+    }
+
 
     @PostMapping("/receptionist/createUpdatePatient")
     public String createUpdatePatient(@ModelAttribute("patient") PatientDto createPatient, Model model) {
