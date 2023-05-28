@@ -87,7 +87,7 @@
 
 
     <div class="links">
-        <a href="<c:url value="/nurse/nurseMainPage"/>"> Назад на главное меню </a>
+        <a href="<c:url value="/nurse/mainPage"/>"> Назад на главное меню </a>
     </div>
 </div>
 </body>

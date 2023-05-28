@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface StaffService {
 
-List<StaffDto> findByRole(Role role);
+    List<StaffDto> findByRole(Role role);
 
-StaffDto findById(Integer id);
+    StaffDto findById(Integer id);
 
+    StaffDto findByUserId (Integer userId);
 }

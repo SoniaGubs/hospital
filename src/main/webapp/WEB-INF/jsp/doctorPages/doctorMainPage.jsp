@@ -10,8 +10,9 @@
 </head>
 <body>
 <div class="container">
-    <h1> Doctor's main page </h1>
-
+    <h1> Здравствуйте, доктор <br>
+   ${staff.surname} ${staff.name} ${staff.patronymic} </h1>
+    <br>
     <h2>Список пациентов:</h2>
 
     <table class="table">

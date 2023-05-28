@@ -31,9 +31,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientDto> findByParametersAndOrderByName(String surname, String name, String patronymic) {
-        if (Objects.equals(name, "")) {
+        if (name.equals("")) {
             return patientMapper.modelsToDto(patientRepository.findBySurnameOrderByNameAsc(surname));
-        } else if (Objects.equals(patronymic, "")) {
+        } else if (patronymic.equals("")) {
             return patientMapper.modelsToDto(patientRepository.findBySurnameAndNameOrderByNameAsc(surname, name));
         } else {
             return patientMapper.modelsToDto(patientRepository.findBySurnameAndNameAndPatronymicOrderByNameAsc(surname, name, patronymic));

@@ -2,9 +2,14 @@ package com.academy.hospital.controller;
 
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.PatientDto;
+import com.academy.hospital.dto.StaffDto;
 import com.academy.hospital.service.CardService;
 import com.academy.hospital.service.PatientService;
+import com.academy.hospital.service.StaffService;
+import com.academy.hospital.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +21,14 @@ import java.util.List;
 public class ReceptionistController {
     private final PatientService patientService;
     private final CardService cardService;
+    private final StaffService staffService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @GetMapping("/receptionist/mainPage")
-    public String showMainPageReceptionist() {
+    public String showMainPageReceptionist(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Integer userId = userDetailsService.findUserId(userDetails);
+        StaffDto staffDto = staffService.findByUserId(userId);
+        model.addAttribute("staff", staffDto);
         return "receptionistPages/receptionistMainPage";
     }
 

@@ -1,6 +1,7 @@
 package com.academy.hospital.service.impl;
 
 import com.academy.hospital.dto.*;
+import com.academy.hospital.exceptions.CardException;
 import com.academy.hospital.mapper.CardMapper;
 import com.academy.hospital.mapper.CardSetDiagnosesMapper;
 import com.academy.hospital.mapper.DiagnosisMapper;
@@ -82,8 +83,11 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public void discharge(Integer id) {
+    public void discharge(Integer id) throws CardException {
         CardDto cardDto = findCard(id);
+        if (cardDto.getStaff()==null || cardDto.getDiagnoses().isEmpty()){
+            throw new CardException("Enter doctor and diagnosis");
+        }
         cardDto.setDateOfDischarge(LocalDate.now());
         cardRepository.save(cardMapper.toModel(cardDto));
     }

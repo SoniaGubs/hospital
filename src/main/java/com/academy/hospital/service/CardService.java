@@ -3,6 +3,7 @@ package com.academy.hospital.service;
 import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.CardSetDiagnosesDto;
 import com.academy.hospital.dto.PatientDto;
+import com.academy.hospital.exceptions.CardException;
 import com.academy.hospital.model.entity.Card;
 import com.academy.hospital.model.entity.Diagnosis;
 
@@ -22,6 +23,6 @@ public interface CardService {
 
     void setDoctor (CardDto cardDto, Integer doctorId);
 
-    void discharge(Integer cardId);
+    void discharge(Integer cardId) throws CardException;
 
 }

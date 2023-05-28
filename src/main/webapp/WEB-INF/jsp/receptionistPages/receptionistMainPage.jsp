@@ -12,7 +12,11 @@
 <div class="container">
     <div class="form-container">
 
-        <h1>Здравствуйте, ${staff.name} ${staff.surname} !</h1> <br>
+        <h1> Здравствуйте, <br>
+            ${staff.surname} ${staff.name} ${staff.patronymic}  </h1>
+        <br>
+
+        <br>
         <p>Вы можете ввести фамилию или фамилию и имя, или же полное фио для лучшего поиска</p>
 
 

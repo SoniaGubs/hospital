@@ -1,6 +1,7 @@
 package com.academy.hospital.controller;
 
 import com.academy.hospital.dto.*;
+import com.academy.hospital.exceptions.CardException;
 import com.academy.hospital.exceptions.TreatmentException;
 import com.academy.hospital.model.entity.Role;
 import com.academy.hospital.model.repository.UserRepository;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,14 +28,16 @@ public class DoctorController {
     private final TreatmentService treatmentService;
 
     private final StaffService staffService;
-    //private final UserRepository userRepository;
     private final UserDetailsServiceImpl userDetailsService;
 
 
-    @GetMapping("/doctor/doctorMainPage")
-    public String showMainPageDoctor(Model model) {
+    @GetMapping("/doctor/mainPage")
+    public String showMainPageDoctor(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Integer userId = userDetailsService.findUserId(userDetails);
+        StaffDto staffDto = staffService.findByUserId(userId);
         List<CardDto> cards = cardService.findSick();
         model.addAttribute("sicks", cards);
+        model.addAttribute("staff", staffDto);
         return "doctorPages/doctorMainPage";
 
     }
@@ -118,8 +119,6 @@ public class DoctorController {
         return "redirect:/doctor/card?id=" + cardId;
     }
 
-
-
     /*------------------------------*/
     // medical history
     /*------------------------------*/
@@ -138,11 +137,9 @@ public class DoctorController {
         return "doctorPages/detailsMedicalHistory";
     }
 
-
     /*------------------------------*/
     //  set doctor
     /*------------------------------*/
-
 
     @GetMapping("/doctor/showSetDoctor")
     public String showSetDoctor(@RequestParam Integer id, Model model) {
@@ -158,7 +155,6 @@ public class DoctorController {
         cardService.setDoctor(cardDto, staffId);
         return "redirect:/doctor/card?id=" + cardId;
     }
-
 
     /*------------------------------*/
     // Discharge
@@ -176,23 +172,17 @@ public class DoctorController {
 
     @GetMapping("/doctor/discharge")
     public String discharge(@RequestParam Integer id, Model model) {
-        cardService.discharge(id);
-        return "redirect:/doctor/doctorMainPage";
-    }
-
-
-
-  /*  @GetMapping("/goToDischarge")
-    public String goToDischarge(@RequestParam Integer id, Model model) {
-           CardDto cardDto = cardService.findCard(id);
-        if((cardDto.getDiagnoses())==null || cardDto.getStaff()==null){
-            return "redirect:/card?id=" + id;
-        }else{
-            cardService.discharge(cardDto);
-            return "sicks";
+        try {
+            cardService.discharge(id);
+        } catch (CardException e) {
+            e.printStackTrace();
+       /*     String errorString =e.getMessage();
+            model.addAttribute("errorString", errorString );
+            return "doctorPages/discharge";*/
+            return "redirect:/doctor/card?id=" + id;
         }
+        return "redirect:/doctor/mainPage";
     }
-*/
 
 
 }

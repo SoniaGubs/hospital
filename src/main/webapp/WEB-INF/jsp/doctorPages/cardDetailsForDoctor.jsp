@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/doctorStyle.css">
 </head>
 <body>
+
 <div class="container">
     <h1>Карта</h1>
 
@@ -103,7 +104,7 @@
     </div>
 
     <div class="links">
-        <a href="<c:url value="/doctor/doctorMainPage"/>">Назад на главное меню</a>
+        <a href="<c:url value="/doctor/mainPage"/>">Назад на главное меню</a>
     </div>
 </div>
 </body>

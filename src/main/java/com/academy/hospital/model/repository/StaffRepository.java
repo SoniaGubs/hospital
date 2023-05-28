@@ -10,5 +10,7 @@ public interface StaffRepository extends JpaRepository <Staff, Integer> {
 
     List<Staff> findByUser_Roles(Role role);
 
+    Staff findByUser_Id(Integer userId);
+
 
 }
