@@ -62,7 +62,7 @@ public class DoctorController {
     }
 
     @PostMapping("/doctor/setDiagnosis")
-    public String setDiagnosis(@ModelAttribute CardSetDiagnosesDto cardSetDiagnosesDto, Model model) {
+    public String setDiagnosis(@ModelAttribute CardSetDiagnosesDto cardSetDiagnosesDto) {
         CardDto card = cardService.updateDiagnosis(cardSetDiagnosesDto);
         Integer id = card.getId();
         return "redirect:/doctor/card?id=" + id;

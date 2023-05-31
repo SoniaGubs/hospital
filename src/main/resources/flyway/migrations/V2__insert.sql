@@ -26,10 +26,7 @@ VALUES (1, 'Коваленко', 'Марина', 'Алексеевна', 'FEMALE
 
 INSERT INTO card (id, patient_id, staff_id, date_of_admission, date_of_discharge,
                   description_diagnosis)
-VALUES (1, 1, 1, '2023-03-23', '2023-03-29', 'в стадии обострения, с повышенной сектреторной активностью'),
-       (2, 2, 2, '2023-03-24', null, 'гастрит в стадии ремиссии'),
-       (3, 3, 1, '2023-03-26', null, null),
-       (4, 4, 1, '2023-03-28', null, 'в верхней кривизне желудка');
+VALUES (1, 6, 1, '2023-03-23', '2023-03-29', 'в стадии обострения, с повышенной сектреторной активностью');
 
 
 INSERT INTO diagnosis (id, ICD10, name)
@@ -43,21 +40,9 @@ VALUES (1, 'K21', 'гастроэзофагеальный рефлюкс'),
 
 
 INSERT INTO card_diagnosis (id, card_id, diagnosis_id)
-VALUES (1, 1, 4),
-       (2, 2, 7),
-       (3, 2, 4),
-       (4, 3, 2),
-       (5, 4, 1);
+VALUES (1, 1, 3),
+       (2, 1, 4);
 
 INSERT INTO treatment (id, card_id, staff_id, treatment_type, prescription, date_of_prescription, date_of_completion)
 VALUES (1, 1, 1, 'DRUG', 'Alamagel', '2023-03-24', '2023-03-24'),
-       (2, 1, 3, 'PROCEDURE', 'Фиброгастроскопия', '2023-03-25', '2023-03-25'),
-       (3, 1, 3, 'DRUG', 'Omez 40mg', '2023-03-24', '2023-03-25'),
-       (4, 2, null, 'PROCEDURE', 'Узи брюшной-полости', '2023-03-24', null),
-       (5, 2, null, 'OPERATION', 'Аппендэктомия', '2023-03-24', null),
-       (6, 2, null, 'DRUG', 'Ceftriaxone', '2023-03-24', null),
-       (7, 2, null, 'DRUG', 'Nolpasa 40mg', '2023-03-26', null),
-       (8, 3, null, 'DRUG', 'De-nol', '2023-03-27', null),
-       (9, 3, null, 'DRUG', 'Peptipak', '2023-03-26', null),
-       (10, 4, null, 'DRUG', 'Alamagel', '2023-03-29', null),
-       (11, 4, null, 'PROCEDURE', 'Фиброгастроскопия', '2023-03-29', null);
+       (2, 1, 1, 'PROCEDURE', 'Фиброгастроскопия', '2023-03-25', '2023-03-25');

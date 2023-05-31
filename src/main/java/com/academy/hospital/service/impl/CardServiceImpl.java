@@ -67,7 +67,7 @@ public class CardServiceImpl implements CardService {
         cardDto.setDateOfAdmission(LocalDate.now());
         cardDto.setPatient(patientDto);
         cardRepository.save(cardMapper.toModel(cardDto));
-        log.info("save new card");
+        log.info("new card saved");
         return cardDto;
     }
 
@@ -76,7 +76,7 @@ public class CardServiceImpl implements CardService {
         StaffDto staffDto = staffService.findById(doctorId);
         cardDto.setStaff(staffDto);
         cardRepository.save(cardMapper.toModel(cardDto));
-        log.info("set doctor in the card");
+        log.info("doctor was set in the card");
     }
 
     @Override

@@ -23,7 +23,7 @@
             <c:forEach items="${treatmentsCompl}" var="treatment">
                 <tr>
                     <td> ${treatment.dateOfPrescription} </td>
-                    <td> ${treatment.treatmentType} </td>
+                    <td> ${treatment.treatmentType.label} </td>
                     <td> ${treatment.prescription} </td>
                     <td> ${treatment.dateOfCompletion} </td>
                     <td> ${treatment.staff.surname} ${treatment.staff.name} ${treatment.staff.patronymic} </td>

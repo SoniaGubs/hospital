@@ -10,6 +10,7 @@
 
 <h1>Пациент</h1>
 
+<div class="container">
     <div class="form">
         <div class="form-row">
             <label>Фамилия:</label> ${patient.surname}
@@ -34,6 +35,7 @@
         </div>
     </div>
 
+
     <c:url value="/receptionist/showCreateUpdatePatient" var="updatePatientAction"/>
     <sf:form method="post" action="${updatePatientAction}" modelAttribute="patient">
         <sf:hidden path="id"/>
@@ -53,6 +55,6 @@
         <a href="<c:url value="/receptionist/createCard?id=${patient.id}"/>" class="menu-button"> создать карту </a>
         <a href="<c:url value="/receptionist/mainPage"/>"> Назад на главное меню </a>
     </div>
-
+</div>
 </body>
 </html>
