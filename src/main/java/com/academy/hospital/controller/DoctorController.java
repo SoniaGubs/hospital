@@ -4,17 +4,15 @@ import com.academy.hospital.dto.*;
 import com.academy.hospital.exceptions.CardException;
 import com.academy.hospital.exceptions.TreatmentException;
 import com.academy.hospital.model.entity.Role;
-import com.academy.hospital.model.repository.UserRepository;
 import com.academy.hospital.service.*;
 import com.academy.hospital.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,14 +20,11 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class DoctorController {
-
     private final CardService cardService;
     private final DiagnosisService diagnosisService;
     private final TreatmentService treatmentService;
-
     private final StaffService staffService;
     private final UserDetailsServiceImpl userDetailsService;
-
 
     @GetMapping("/doctor/mainPage")
     public String showMainPageDoctor(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -39,7 +34,6 @@ public class DoctorController {
         model.addAttribute("sicks", cards);
         model.addAttribute("staff", staffDto);
         return "doctorPages/doctorMainPage";
-
     }
 
     @GetMapping("/doctor/card")
@@ -106,12 +100,6 @@ public class DoctorController {
         return "redirect:/doctor/card?id=" + cardId;
     }
 
-/*    @GetMapping("/doctor/doTreatment")
-    public String doTreatment(@RequestParam Integer id, @RequestParam Integer cardId, @AuthenticationPrincipal UserDetails userDetails) {
-        Integer userId = userRepository.findByUsername(userDetails.getUsername()).getId();
-        treatmentService.doTreatment(id, userId);
-        return "redirect:/doctor/card?id=" + cardId;
-    }*/
     @GetMapping("/doctor/doTreatment")
     public String doTreatment(@RequestParam Integer id, @RequestParam Integer cardId, @AuthenticationPrincipal UserDetails userDetails) throws TreatmentException {
         Integer userId = userDetailsService.findUserId(userDetails);
@@ -170,19 +158,16 @@ public class DoctorController {
         return "doctorPages/discharge";
     }
 
+
     @GetMapping("/doctor/discharge")
-    public String discharge(@RequestParam Integer id, Model model) {
+    public String discharge(RedirectAttributes redirectAttributes, @RequestParam Integer id) {
         try {
             cardService.discharge(id);
         } catch (CardException e) {
-            e.printStackTrace();
-       /*     String errorString =e.getMessage();
-            model.addAttribute("errorString", errorString );
-            return "doctorPages/discharge";*/
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/doctor/card?id=" + id;
         }
         return "redirect:/doctor/mainPage";
     }
-
 
 }

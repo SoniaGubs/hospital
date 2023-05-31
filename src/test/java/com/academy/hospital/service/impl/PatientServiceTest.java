@@ -4,8 +4,6 @@ import com.academy.hospital.dto.PatientDto;
 import com.academy.hospital.mapper.PatientMapper;
 import com.academy.hospital.model.entity.Patient;
 import com.academy.hospital.model.repository.PatientRepository;
-import com.academy.hospital.service.PatientService;
-import com.academy.hospital.service.impl.PatientServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,19 +19,17 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class PatientServiceTest {
+class PatientServiceTest {
 
     @InjectMocks
-    private PatientService patientService;
-
+    private PatientServiceImpl patientService;
     @Mock
     private PatientMapper patientMapper;
-
     @Mock
     private PatientRepository patientRepository;
 
     @Test
-    public void testFind() {
+    void testFind() {
         Patient patient = new Patient();
         patient.setId(2);
         when(patientRepository.getReferenceById(2)).thenReturn(patient);
@@ -49,7 +45,7 @@ public class PatientServiceTest {
     }
 
     @Test
-    public void testFindAll() {
+    void testFindAll() {
         PatientDto firstDto = new PatientDto();
         PatientDto secondDto = new PatientDto();
         List<PatientDto> patientDtoList = new ArrayList<>(Arrays.asList(firstDto, secondDto));
@@ -68,37 +64,7 @@ public class PatientServiceTest {
 
     }
 
-   /* @Test
-    public void testFindByParametersAndOrderByName() {
-
-
-
-    }
-*/
-
 }
-
-
-/*
-
-    public List<PatientDto> findByParametersAndOrderByName(String surname, String name, String patronymic) {
-        if (name.equals("")) {
-            return patientMapper.modelsToDto(patientRepository.findBySurnameOrderByNameAsc(surname));
-        } else if (patronymic.equals("")) {
-            return patientMapper.modelsToDto(patientRepository.findBySurnameAndNameOrderByNameAsc(surname, name));
-        } else {
-            return patientMapper.modelsToDto(patientRepository.findBySurnameAndNameAndPatronymicOrderByNameAsc(surname, name, patronymic));
-        }
-    }
-
-
-
-    @Override
-    public PatientDto save(PatientDto patientDto) {
-        Patient patient = patientMapper.toModel(patientDto);
-        patientRepository.save(patient);
-        return patientMapper.toDto(patient);
-    }*/
 
 
 

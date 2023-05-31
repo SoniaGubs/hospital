@@ -13,21 +13,18 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class NurseController {
-
     private final CardService cardService;
     private final TreatmentService treatmentService;
     private final UserDetailsServiceImpl userDetailsService;
     private final StaffService staffService;
-
 
     @GetMapping("/nurse/mainPage")
     public String showNurseMainPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -50,17 +47,16 @@ public class NurseController {
         return "nursePages/cardDetailsForNurse";
     }
 
-
     @GetMapping("/nurse/doTreatment")
-    @ExceptionHandler()
-    public String doTreatment(@RequestParam Integer id, @RequestParam Integer cardId, @AuthenticationPrincipal UserDetails userDetails) {
+    public String doTreatment(@RequestParam Integer id, @RequestParam Integer cardId, @AuthenticationPrincipal UserDetails userDetails,RedirectAttributes redirectAttributes) {
         Integer userId = userDetailsService.findUserId(userDetails);
         try {
             treatmentService.doTreatment(id, userId);
         } catch (TreatmentException e) {
-            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/nurse/card?id=" + cardId;
         }
         return "redirect:/nurse/card?id=" + cardId;
     }
+
 }

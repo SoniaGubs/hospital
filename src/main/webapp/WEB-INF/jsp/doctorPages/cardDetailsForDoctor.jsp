@@ -7,6 +7,17 @@
 </head>
 <body>
 
+<c:if test="${error != null}">
+<body onload="myFunction()">
+    <script>
+        function myFunction() {
+            alert("Выписать пациента без указания диагноза и лечащего врача невозможно. Укажите лечащего врача и диагнозы");
+        }
+    </script>
+</body>
+</c:if>
+
+
 <div class="container">
     <h1>Карта</h1>
 

@@ -1,7 +1,6 @@
 package com.academy.hospital.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -50,23 +49,5 @@ public class Card {
 
     @Column(name = "description_diagnosis")
     private String descriptionDiagnosis;
-
-/*
-    @Column(name = "description_final_diagnosis")
-    private String descriptionFinalDiagnosis;
-*/
-
-/*
-    @ManyToMany
-    @JoinTable(
-            name = "card_diagnosis",
-            joinColumns = {@JoinColumn(name ="card_id")},
-            inverseJoinColumns = {@JoinColumn(name = "diagnosis_id")}
-    ) private List<Diagnosis> finalDiagnosis;
-
-
-   *//* @OneToMany
-    @JoinColumn(name = "card_id")
-    private List<Treatment> treatments;*/
 
 }

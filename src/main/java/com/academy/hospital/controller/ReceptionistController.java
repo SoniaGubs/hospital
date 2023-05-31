@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
@@ -39,7 +38,6 @@ public class ReceptionistController {
         return "receptionistPages/findPatient";
     }
 
-
     @GetMapping("/receptionist/showCreateUpdatePatient")
     public String showFormPatient(Model model) {
         PatientDto createPatient = new PatientDto();
@@ -52,7 +50,6 @@ public class ReceptionistController {
         model.addAttribute("patient", updatePatient);
         return "receptionistPages/createUpdatePatient";
     }
-
 
     @PostMapping("/receptionist/createUpdatePatient")
     public String createUpdatePatient(@ModelAttribute("patient") PatientDto createPatient, Model model) {
@@ -68,7 +65,6 @@ public class ReceptionistController {
         return "receptionistPages/patientDetails";
     }
 
-
     @GetMapping("/receptionist/createCard")
     public String createCard(@RequestParam(value = "id") Integer id, Model model) {
         PatientDto patientDto = patientService.find(id);
@@ -76,6 +72,5 @@ public class ReceptionistController {
         model.addAttribute("card", card);
         return "receptionistPages/successCreateCard";
     }
-
 
 }

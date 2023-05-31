@@ -4,8 +4,7 @@ import com.academy.hospital.dto.StaffDto;
 import com.academy.hospital.mapper.StaffMapper;
 import com.academy.hospital.model.entity.Staff;
 import com.academy.hospital.model.repository.StaffRepository;
-import com.academy.hospital.service.StaffService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,14 +16,12 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class StaffServiceTest {
+class StaffServiceTest {
 
     @InjectMocks
-    private StaffService staffService;
-
+    private StaffServiceImpl staffService;
     @Mock
     private StaffMapper staffMapper;
-
     @Mock
     private StaffRepository staffRepository;
 

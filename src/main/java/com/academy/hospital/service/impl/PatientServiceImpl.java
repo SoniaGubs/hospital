@@ -6,16 +6,14 @@ import com.academy.hospital.model.entity.Patient;
 import com.academy.hospital.model.repository.PatientRepository;
 import com.academy.hospital.service.PatientService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Objects;
-
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
-
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
 
@@ -40,13 +38,11 @@ public class PatientServiceImpl implements PatientService {
         }
     }
 
-
     @Override
     public PatientDto save(PatientDto patientDto) {
         Patient patient = patientMapper.toModel(patientDto);
         patientRepository.save(patient);
         return patientMapper.toDto(patient);
     }
-
 
 }

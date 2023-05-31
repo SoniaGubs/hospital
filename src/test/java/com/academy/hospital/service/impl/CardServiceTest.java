@@ -1,17 +1,14 @@
 package com.academy.hospital.service.impl;
 
 import com.academy.hospital.dto.CardDto;
-import com.academy.hospital.dto.CardSetDiagnosesDto;
 import com.academy.hospital.dto.PatientDto;
 import com.academy.hospital.dto.StaffDto;
-import com.academy.hospital.exceptions.CardException;
 import com.academy.hospital.mapper.*;
 import com.academy.hospital.model.entity.Card;
-import com.academy.hospital.model.entity.Diagnosis;
 import com.academy.hospital.model.entity.Patient;
+import com.academy.hospital.model.entity.Staff;
 import com.academy.hospital.model.repository.CardRepository;
-import com.academy.hospital.service.CardService;
-import com.academy.hospital.service.impl.CardServiceImpl;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,20 +25,20 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CardServiceTest {
+class CardServiceTest {
 
     @InjectMocks
-    private CardService cardService;
-
+    private CardServiceImpl cardService;
     @Mock
     private CardMapper cardMapper;
-
     @Mock
     private CardRepository cardRepository;
+    @Mock
+    private StaffServiceImpl staffService;
 
 
     @Test
-    public void testFindCardById() {
+    void testFindCardById() {
         Card card = new Card();
         card.setId(1);
         when(cardRepository.getReferenceById(1)).thenReturn(card);
@@ -57,7 +54,7 @@ public class CardServiceTest {
     }
 
     @Test
-    public void testFindSick() {
+    void testFindSick() {
         Card first = new Card();
         first.setId(1);
         Card second = new Card();
@@ -82,7 +79,7 @@ public class CardServiceTest {
 
 
     @Test
-    public void testSave() {
+    void testSave() {
         PatientDto patientDto = new PatientDto();
         patientDto.setId(1);
         Patient patient = new Patient();
@@ -106,7 +103,7 @@ public class CardServiceTest {
     }
 
     @Test
-    public void testFindAllCardByPatient() {
+    void testFindAllCardByPatient() {
 
         PatientDto patientDto = new PatientDto();
         patientDto.setId(5);
@@ -117,65 +114,43 @@ public class CardServiceTest {
         Card second = new Card();
         first.setPatient(patient);
         second.setPatient(patient);
-        List<Card> cards = new ArrayList<>(Arrays.asList(first,second));
-        when(cardRepository.findByPatient_Id(5)).thenReturn(cards);
+        List<Card> cards = new ArrayList<>(Arrays.asList(first, second));
+        when(cardRepository.findByPatient_IdAndDateOfDischargeIsNotNull(5)).thenReturn(cards);
 
         CardDto firstDto = new CardDto();
         CardDto secondDto = new CardDto();
         firstDto.setPatient(patientDto);
         secondDto.setPatient(patientDto);
-        List<CardDto> cardDtos = new ArrayList<>(Arrays.asList(firstDto,secondDto));
+        List<CardDto> cardDtos = new ArrayList<>(Arrays.asList(firstDto, secondDto));
         when(cardMapper.modelsToDto(cards)).thenReturn(cardDtos);
 
         List<CardDto> actualList = cardService.findAllCardByPatient(5);
 
-        verify(cardRepository).findByPatient_Id(5);
+        verify(cardRepository).findByPatient_IdAndDateOfDischargeIsNotNull(5);
         verify(cardMapper).modelsToDto(cards);
-        assertEquals(actualList,cardDtos);
-
+        assertEquals(actualList, cardDtos);
 
     }
 
+    @Test
+    void testSetDoctor() {
+        StaffDto staffDto = new StaffDto();
+        staffDto.setId(1);
+        Staff staff = new Staff();
+        staff.setId(1);
+        when(staffService.findById(1)).thenReturn(staffDto);
 
-   /*
-
-
-
-    public CardSetDiagnosesDto createCardSetDiagnosesDto(Integer id) {
-        Card card = cardRepository.getReferenceById(id);
-        return cardSetDiagnosesMapper.toDto(card);
-    }
-
-
-    @Override
-    public CardDto updateDiagnosis(CardSetDiagnosesDto cardSetDiagnosesDto) {
-        Card card = cardRepository.getReferenceById(cardSetDiagnosesDto.getId());
-        List<Diagnosis> startDiagnoses = diagnosisMapper.dtoToModels(cardSetDiagnosesDto.getDiagnoses());
-        card.setDiagnoses(startDiagnoses);
-        card.setDescriptionDiagnosis(cardSetDiagnosesDto.getDescriptionDiagnosis());
-        cardRepository.save(card);
-        return cardMapper.toDto(card);
-    }
-
-
-
-    @Override
-    public void setDoctor(CardDto cardDto, Integer doctorId) {
-        StaffDto staffDto = staffService.findById(doctorId);
+        CardDto cardDto = new CardDto();
         cardDto.setStaff(staffDto);
-        cardRepository.save(cardMapper.toModel(cardDto));
+        Card card = new Card();
+        card.setStaff(staff);
+
+        when(cardMapper.toModel(cardDto)).thenReturn(card);
+        cardService.setDoctor(cardDto, staff.getId());
+        verify(cardRepository).save(card);
+        verify(cardMapper).toModel(cardDto);
+        verify(staffService).findById(1);
+
     }
-
-
-    @Override
-    public void discharge(Integer id) throws CardException {
-        CardDto cardDto = findCard(id);
-        if (cardDto.getStaff()==null || cardDto.getDiagnoses().isEmpty()){
-            throw new CardException("Enter doctor and diagnosis");
-        }
-        cardDto.setDateOfDischarge(LocalDate.now());
-        cardRepository.save(cardMapper.toModel(cardDto));
-    }*/
-
 
 }

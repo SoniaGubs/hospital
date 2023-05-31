@@ -4,8 +4,6 @@ import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.CardSetDiagnosesDto;
 import com.academy.hospital.dto.PatientDto;
 import com.academy.hospital.exceptions.CardException;
-import com.academy.hospital.model.entity.Card;
-import com.academy.hospital.model.entity.Diagnosis;
 
 import java.util.List;
 

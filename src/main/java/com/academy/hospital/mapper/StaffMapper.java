@@ -1,8 +1,6 @@
 package com.academy.hospital.mapper;
 
-
 import com.academy.hospital.dto.StaffDto;
-
 import com.academy.hospital.model.entity.Staff;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;

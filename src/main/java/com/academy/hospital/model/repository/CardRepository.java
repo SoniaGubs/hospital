@@ -9,6 +9,6 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
 
     List<Card> findByDateOfDischargeIsNull ();
 
-    List<Card> findByPatient_Id(Integer id);
+    List<Card> findByPatient_IdAndDateOfDischargeIsNotNull(Integer id);
 
 }

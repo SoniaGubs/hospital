@@ -4,9 +4,7 @@ import com.academy.hospital.dto.DiagnosisDto;
 import com.academy.hospital.mapper.DiagnosisMapper;
 import com.academy.hospital.model.entity.Diagnosis;
 import com.academy.hospital.model.repository.DiagnosisRepository;
-import com.academy.hospital.service.DiagnosisService;
-import com.academy.hospital.service.impl.DiagnosisServiceImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,20 +19,17 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class DiagnosisServiceTest {
+class DiagnosisServiceTest {
 
     @InjectMocks
-    private DiagnosisService diagnosisService;
-
+    private DiagnosisServiceImpl diagnosisService;
     @Mock
     private DiagnosisMapper diagnosisMapper;
-
     @Mock
     private DiagnosisRepository diagnosisRepository;
 
-
     @Test
-    public void testFindAll() {
+    void testFindAllDiagnoses() {
         Diagnosis first = new Diagnosis();
         first.setId(1);
         Diagnosis second = new Diagnosis();
@@ -57,6 +52,5 @@ public class DiagnosisServiceTest {
         assertEquals(diagnosisDtos, realList);
 
     }
-
 
 }

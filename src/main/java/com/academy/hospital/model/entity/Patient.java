@@ -5,8 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -31,21 +29,6 @@ public class Patient {
     private LocalDate dob;
     private String phone;
 
-/*    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "patient")
-    private List<Card> cards;*/
-
-/*    @Override
-    public String toString() {
-        return "Patient{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", gender=" + gender +
-                ", passport='" + passport + '\'' +
-                ", dob=" + dob +
-                ", phone='" + phone + '\'' +
-                '}';
-    }*/
 }
 
 

@@ -9,6 +9,19 @@
     <link rel="stylesheet" href="/css/doctorStyle.css">
 </head>
 <body>
+
+
+<c:if test="${error != null}">
+    <body onload="myFunction()">
+    <script>
+        function myFunction() {
+            alert("Медсестра/медбрат не может выполнять операцию");
+        }
+    </script>
+    </body>
+</c:if>
+
+
 <div class="container">
     <h1>Карта</h1>
 

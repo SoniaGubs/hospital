@@ -1,9 +1,9 @@
 package com.academy.hospital.model.entity;
 
 public enum TreatmentType {
-    DRUG("Drug"),
-    PROCEDURE("Procedure"),
-    OPERATION("Operation");
+    DRUG("Лекарство"),
+    PROCEDURE("Процедура"),
+    OPERATION("Операция");
 
     private String label;
 

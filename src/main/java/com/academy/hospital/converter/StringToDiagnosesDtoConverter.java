@@ -4,10 +4,8 @@ import com.academy.hospital.dto.DiagnosisDto;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class StringToDiagnosesDtoConverter implements Converter<String, DiagnosisDto> {
-
 
     @Override
     public DiagnosisDto convert(String source) {

@@ -1,31 +1,27 @@
 package com.academy.hospital.service.impl;
 
-import com.academy.hospital.dto.CardDto;
 import com.academy.hospital.dto.TreatmentDto;
 import com.academy.hospital.exceptions.TreatmentException;
-import com.academy.hospital.mapper.CardMapper;
-import com.academy.hospital.mapper.StaffMapper;
 import com.academy.hospital.mapper.TreatmentMapper;
 import com.academy.hospital.model.entity.*;
-import com.academy.hospital.model.repository.CardRepository;
 import com.academy.hospital.model.repository.StaffRepository;
 import com.academy.hospital.model.repository.TreatmentRepository;
 import com.academy.hospital.service.TreatmentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TreatmentServiceImpl implements TreatmentService {
-
     private final TreatmentRepository treatmentRepository;
 
     private final TreatmentMapper treatmentMapper;
     private final StaffRepository staffRepository;
-    private final StaffMapper staffMapper;
 
     @Override
     public TreatmentDto findById(Integer id) {
@@ -37,8 +33,8 @@ public class TreatmentServiceImpl implements TreatmentService {
         treatmentDto.setDateOfPrescription(LocalDate.now());
         Treatment treatment = treatmentMapper.toModel(treatmentDto);
         treatmentRepository.save(treatment);
+        log.info("set treatment in card");
     }
-
 
     @Override
     public List<TreatmentDto> findByCardId(Integer id) {
@@ -62,17 +58,18 @@ public class TreatmentServiceImpl implements TreatmentService {
 
     @Override
     public void doTreatment(Integer id, Integer userId) throws TreatmentException {
-        //TreatmentDto treatmentDto = findById(id);
 
         Treatment treatment = treatmentRepository.getReferenceById(id);
 
         Staff staff = staffRepository.findByUser_Id(userId);
         if ((staff.getUser().getRoles().get(0) == Role.ROLE_NURSE) && (treatment.getTreatmentType() == TreatmentType.OPERATION)) {
+            log.error("nurse tries to do operations, but it's impossible");
             throw new TreatmentException("Nurse can not do operations");
         }
         treatment.setDateOfCompletion(LocalDate.now());
         treatment.setStaff(staff);
         treatmentRepository.save(treatment);
+        log.info("somebody does treatment");
     }
 
 }
