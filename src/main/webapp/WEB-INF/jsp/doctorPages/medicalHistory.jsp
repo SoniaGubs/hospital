@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <div class="table">
-        <h1> История болезней</h1>>
+        <h1> История болезней</h1>
         <table>
 
             <tr>

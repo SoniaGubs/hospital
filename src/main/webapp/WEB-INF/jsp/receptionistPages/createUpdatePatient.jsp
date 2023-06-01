@@ -11,7 +11,7 @@
 <body>
 
 <div class="container">
-    <h1>Новый пациент</h1>
+    <h1>пациент</h1>
 
     <c:url value="/receptionist/createUpdatePatient" var="createUpdatePatientAction"/>
     <sf:form method="post" action="${createUpdatePatientAction}" modelAttribute="patient" class="form">

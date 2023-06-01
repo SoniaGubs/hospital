@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="table">
-        <h1> Выполненное лечение</h1>>
+        <h1> Выполненное лечение</h1>
         <table>
             <tr>
                 <th> Дата назначения</th>
